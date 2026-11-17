@@ -109,7 +109,7 @@ export default function EventsPage() {
     <div className="flex flex-col gap-5">
       <PageHeader
         title="Events"
-        subtitle="Manage foundation events"
+        subtitle="Manage fellowship events"
         actions={[{ label: "Add Event", onClick: () => router.push("/admin/events/new"), variant: "primary" }]}
       />
 

@@ -38,8 +38,8 @@ export async function POST(request: NextRequest) {
     try {
       const { subject, html, text } = newsletterEmail({
         title: "You're subscribed — welcome to ABF!",
-        excerpt: "Thanks for joining Adeyinka Bakare Foundation. You'll get scholarship, programme and event updates.",
-        url: process.env.NEXT_PUBLIC_SITE_URL || "https://adeyinkabakare.org",
+        excerpt: "Thanks for joining Adeyinka Bakare Fellowship. You'll get scholarship, programme and event updates.",
+        url: process.env.NEXT_PUBLIC_SITE_URL || "https://abfimpact.org",
         recipientEmail: normalized,
         fullName: full_name,
       });

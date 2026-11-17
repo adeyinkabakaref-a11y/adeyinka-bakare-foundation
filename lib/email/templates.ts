@@ -1,13 +1,25 @@
 import { baseEmailLayout } from "./layout";
+import { formatEventDate, formatEventTime } from "@/lib/utils/dates";
+
+const DEFAULT_PRESIDENT_IMAGE =
+ "https://kgopmlpskjrygklbjqrk.supabase.co/storage/v1/object/public/public-images/200a0d3c-7f1b-4036-a2d9-da9f73469bfa/other/1794867011644-Glory_Adeniran.jpg.jpeg";
 
 function esc(s: string){ return s.replace(/[&<>"']/g, c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]!)); }
 
+function presidentSignature(opts: { fromName: string; presidentImage?: string | null }) {
+ const image = opts.presidentImage || DEFAULT_PRESIDENT_IMAGE;
+ return `<table role="presentation" cellpadding="0" cellspacing="0" style="margin:16px 0 0;border-collapse:collapse"><tr>
+<td style="padding-right:12px;vertical-align:middle"><img src="${esc(image)}" alt="${esc(opts.fromName)}" width="52" height="52" style="display:block;width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid #f8c84d;" /></td>
+<td style="vertical-align:middle;color:#8a7a74;font-size:13px;line-height:1.6">Warm regards,<br/><strong style="color:#2d1816">${esc(opts.fromName)}</strong><br/><span style="font-size:11px">President, Adeyinka Bakare Fellowship</span></td>
+</tr></table>`;
+}
+
 export function adminInviteEmail(opts: { fullName: string; email: string; role: string; inviteUrl: string; expiresAt: string; inviterName: string; logoUrl?: string }) {
   const roleLabel = opts.role.replace("_"," ").replace(/\b\w/g, c=>c.toUpperCase());
-  const subject = `You're invited to join Adeyinka Bakare Foundation as ${roleLabel}`;
+  const subject = `You're invited to join Adeyinka Bakare Fellowship as ${roleLabel}`;
   const html = baseEmailLayout(`
     <p style="margin:0 0 16px">Hi ${esc(opts.fullName)},</p>
-    <p style="margin:0 0 16px"><strong>${esc(opts.inviterName)}</strong> invited you to join <strong>Adeyinka Bakare Foundation</strong> as <strong>${esc(roleLabel)}</strong>.</p>
+    <p style="margin:0 0 16px"><strong>${esc(opts.inviterName)}</strong> invited you to join <strong>Adeyinka Bakare Fellowship</strong> as <strong>${esc(roleLabel)}</strong>.</p>
     <p style="margin:0 0 20px"><a href="${opts.inviteUrl}" style="display:inline-block;background:#aa322b;color:#fff;text-decoration:none;padding:12px 22px;border-radius:999px;font-weight:800;font-size:13px;letter-spacing:.02em">Accept invite & set password →</a></p>
     <p style="margin:0 0 8px;color:#6b5b55;font-size:13px">Or copy this link:</p>
     <p style="word-break:break-all;margin:0 0 16px"><a href="${opts.inviteUrl}" style="color:#aa322b">${opts.inviteUrl}</a></p>
@@ -24,7 +36,7 @@ export function adminInviteEmail(opts: { fullName: string; email: string; role: 
 }
 
 export function welcomeEmail(opts: { fullName: string; loginUrl: string }) {
-  const subject = `Welcome to Adeyinka Bakare Foundation`;
+  const subject = `Welcome to Adeyinka Bakare Fellowship`;
   const html = baseEmailLayout(`
     <p style="margin:0 0 16px">Hi ${esc(opts.fullName)},</p>
     <p style="margin:0 0 16px">Your account is active — you can now sign in to the ABF admin console.</p>
@@ -42,7 +54,7 @@ export function memberWelcomeEmail(opts: {
   session?: string | null;
   siteUrl?: string;
 }) {
-  const siteUrl = (opts.siteUrl || "https://adeyinkabakare.org").replace(/\/$/, "");
+  const siteUrl = (opts.siteUrl || "https://abfimpact.org").replace(/\/$/, "");
   const links = {
     about: `${siteUrl}/about`,
     programmes: `${siteUrl}/programmes`,
@@ -51,17 +63,13 @@ export function memberWelcomeEmail(opts: {
     events: `${siteUrl}/events`,
     getInvolved: `${siteUrl}/get-involved`,
     contact: `${siteUrl}/contact`,
-    instagram: "https://instagram.com/adeyinkabakarefoundation",
-    x: "https://x.com/adeyinkabakare",
-    linkedin: "https://www.linkedin.com/company/adeyinkabakare-foundation",
-    facebook: "https://facebook.com/adeyinkabakarefoundation",
   };
 
-  const subject = `Welcome to the Adeyinka Bakare Foundation — your membership is confirmed`;
+  const subject = `Welcome to the Adeyinka Bakare Fellowship — your membership is confirmed`;
 
   const html = baseEmailLayout(`
     <p style="margin:0 0 14px">Hi <strong>${esc(opts.fullName)}</strong>,</p>
-    <p style="margin:0 0 14px">Welcome to the <strong>Adeyinka Bakare Foundation (ABF)</strong> — the student fellowship of the Department of Information Technology, University of Ilorin. We're thrilled to have you join a community of students who care about <em>academic excellence, leadership, integrity, innovation and service</em>.</p>
+    <p style="margin:0 0 14px">Welcome to the <strong>Adeyinka Bakare Fellowship (ABF)</strong> — the student fellowship of the Department of Information Technology, University of Ilorin. We're thrilled to have you join a community of students who care about <em>academic excellence, leadership, integrity, innovation and service</em>.</p>
     <p style="margin:0 0 18px">Your membership has been recorded and our team has been notified. Below is everything you need to know to get the most out of your fellowship.</p>
 
     <h2 style="margin:24px 0 8px;font-family:Georgia,serif;font-size:18px;color:#2d1816">Your details</h2>
@@ -74,7 +82,7 @@ export function memberWelcomeEmail(opts: {
     </table>
 
     <h2 style="margin:24px 0 8px;font-family:Georgia,serif;font-size:18px;color:#2d1816">About ABF</h2>
-    <p style="margin:0 0 12px">The Adeyinka Bakare Foundation exists to empower students of the Department of Information Technology at the University of Ilorin through <strong>scholarships, mentorship, career development and collaborative learning</strong>.</p>
+    <p style="margin:0 0 12px">The Adeyinka Bakare Fellowship exists to empower students of the Department of Information Technology at the University of Ilorin through <strong>scholarships, mentorship, career development and collaborative learning</strong>.</p>
     <p style="margin:0 0 4px"><strong>Our vision</strong> — a generation of well-equipped, innovative and responsible IT professionals from the University of Ilorin.</p>
     <p style="margin:0 0 14px"><strong>Our mission</strong> — to support students academically, professionally and personally, and to build a community that gives back.</p>
 
@@ -98,7 +106,7 @@ export function memberWelcomeEmail(opts: {
 
     <h2 style="margin:24px 0 8px;font-family:Georgia,serif;font-size:18px;color:#2d1816">Stay connected</h2>
     <p style="margin:0 0 12px">Follow ABF on social media for daily updates, opportunities and community stories:</p>
-    <p style="margin:0 0 4px"><a href="${links.instagram}" style="color:#aa322b;text-decoration:none">Instagram</a> · <a href="${links.x}" style="color:#aa322b;text-decoration:none">X / Twitter</a> · <a href="${links.linkedin}" style="color:#aa322b;text-decoration:none">LinkedIn</a> · <a href="${links.facebook}" style="color:#aa322b;text-decoration:none">Facebook</a></p>
+<p style="margin:0 0 12px">Follow ABF on social media for daily updates, opportunities and community stories — the links are in the footer below.</p>
     <p style="margin:0 0 18px">For questions, partnerships or support, simply reply to this email or visit the <a href="${links.contact}" style="color:#aa322b;font-weight:600">contact page</a>.</p>
 
     <div style="background:#fff9eb;border:1px solid #f0e6d8;border-radius:12px;padding:14px 16px;font-size:13px;color:#6b5b55;line-height:1.6">
@@ -107,7 +115,7 @@ export function memberWelcomeEmail(opts: {
     </div>
 
     <p style="margin:18px 0 0">We are glad to have you. Welcome aboard.</p>
-    <p style="margin:6px 0 0;color:#6b5b55;font-size:13px">— The Adeyinka Bakare Foundation Team</p>
+    <p style="margin:6px 0 0;color:#6b5b55;font-size:13px">— The Adeyinka Bakare Fellowship Team</p>
   `, {
     title: `Welcome, ${esc(opts.fullName)}!`,
     subtitle: "Your membership with ABF is confirmed — here's everything you need to know.",
@@ -115,7 +123,7 @@ export function memberWelcomeEmail(opts: {
     heroImage: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80",
   });
 
-  const text = `Welcome to the Adeyinka Bakare Foundation, ${opts.fullName}!
+  const text = `Welcome to the Adeyinka Bakare Fellowship, ${opts.fullName}!
 
 Your membership is confirmed. We're thrilled to have you join the ABF community — students of the Department of Information Technology, University of Ilorin, united by academic excellence, leadership, integrity, innovation and service.
 
@@ -128,7 +136,7 @@ ${opts.session ? `Session: ${opts.session}` : ""}
 
 About ABF
 ---------
-The Adeyinka Bakare Foundation empowers IT students at the University of Ilorin through scholarships, mentorship, career development and collaborative learning.
+The Adeyinka Bakare Fellowship empowers IT students at the University of Ilorin through scholarships, mentorship, career development and collaborative learning.
 
 Vision: a generation of well-equipped, innovative and responsible IT professionals from the University of Ilorin.
 Mission: to support students academically, professionally and personally, and to build a community that gives back.
@@ -151,10 +159,7 @@ Next steps
 
 Stay connected
 --------------
-Instagram: ${links.instagram}
-X / Twitter: ${links.x}
-LinkedIn: ${links.linkedin}
-Facebook: ${links.facebook}
+Follow ABF on social media using the links in the email footer.
 
 Contact: ${links.contact}
 
@@ -162,7 +167,7 @@ A quick note on conduct: ABF is a respectful, inclusive and accountable communit
 
 We are glad to have you. Welcome aboard.
 
-— The Adeyinka Bakare Foundation Team
+— The Adeyinka Bakare Fellowship Team
 `;
 
   return { subject, html, text };
@@ -228,7 +233,7 @@ export function newsletterEmail(opts: { title: string; excerpt?: string; url?: s
     heroImage: "https://images.unsplash.com/photo-1494172961521-33799ddd43a5?auto=format&fit=crop&w=1200&q=80",
     recipientEmail: opts.recipientEmail,
   });
-  const text = `${opts.title}\n\n${greeting.replace(/<[^>]+>/g, "")}\n\n${opts.excerpt || ""}${opts.url ? `\n\n${opts.url}` : ""}\n\nUnsubscribe: ${process.env.NEXT_PUBLIC_SITE_URL || "https://adeyinkabakare.org"}/unsubscribe?email=${encodeURIComponent(opts.recipientEmail || "")}`;
+  const text = `${opts.title}\n\n${greeting.replace(/<[^>]+>/g, "")}\n\n${opts.excerpt || ""}${opts.url ? `\n\n${opts.url}` : ""}\n\nUnsubscribe: ${process.env.NEXT_PUBLIC_SITE_URL || "https://abfimpact.org"}/unsubscribe?email=${encodeURIComponent(opts.recipientEmail || "")}`;
   return { subject, html, text };
 }
 
@@ -307,4 +312,116 @@ export function recoveryCodesLowWarningEmail(opts: { fullName: string; remaining
   `, { title: "Recovery Codes Running Low", subtitle: "Regenerate your codes soon." });
   const text = `Hi ${opts.fullName},\n\nYou have only ${opts.remaining} recovery code${opts.remaining === 1 ? '' : 's'} remaining.\n\nPlease regenerate your recovery codes soon.`;
   return { subject, html, text };
+}
+
+/**
+ * Thank you email sent to applicants after they submit an event registration form.
+ * Branded as from Glory Adeniran, ABF President.
+ */
+export function sendEventApplicationEmail(opts: {
+  fullName: string;
+  email: string;
+  eventTitle: string;
+  eventDate: string;
+presidentImage?: string | null;
+  location?: string;
+  fromName: string;
+  siteUrl: string;
+  whatsappLink?: string;
+  meetLink?: string;
+}) {
+  const eventDate = formatEventDate(opts.eventDate);
+  const html = baseEmailLayout(
+    `<p style="margin:0 0 16px">Dear ${esc(opts.fullName)},</p>
+    <p style="margin:0 0 16px">Thank you for your interest in <strong>${esc(opts.eventTitle)}</strong>! Your registration has been received successfully.</p>
+    <div style="background:#fff9eb;border:1px solid #f0e6d8;border-radius:12px;padding:14px 16px;font-size:13px;color:#2d1816">
+      <strong style="color:#2d1816">Event Details</strong><br/>
+      <strong>Event:</strong> ${esc(opts.eventTitle)}<br/>
+      <strong>Date:</strong> ${eventDate} · ${formatEventTime(opts.eventDate)}${opts.location ? `<br/><strong>Location:</strong> ${esc(opts.location)}` : ""}
+    </div>
+    ${opts.meetLink ? `<p style="margin:16px 0 8px"><strong>Join the Event Online</strong></p><p style="margin:0 0 8px">Click the button below to join the event via Google Meet at the scheduled time:</p><p style="margin:0 0 16px"><a href="${esc(opts.meetLink)}" style="display:inline-block;background:#aa322b;color:#fff;text-decoration:none;padding:10px 20px;border-radius:999px;font-weight:700;font-size:13px">Join Google Meet →</a></p>` : ""}
+    ${opts.whatsappLink ? `<p style="margin:16px 0 8px"><strong>Join Our Community</strong></p><p style="margin:0 0 8px">Connect with other attendees and stay updated with event announcements by joining our WhatsApp community:</p><p style="margin:0 0 16px"><a href="${esc(opts.whatsappLink)}" style="display:inline-block;background:#d9960d;color:#fff;text-decoration:none;padding:10px 20px;border-radius:999px;font-weight:700;font-size:13px">Join WhatsApp Community →</a></p>` : ""}
+    <p style="margin:16px 0 0;color:#8a7a74;font-size:13px">We're excited to have you with us. Please save this email for your records.</p>
+    ${presidentSignature({ fromName: opts.fromName, presidentImage: opts.presidentImage })}`,
+    {
+      title: `You're Registered for ${esc(opts.eventTitle)}`,
+      subtitle: "Your registration has been confirmed. We look forward to seeing you there!",
+      preheader: `Thank you for registering for ${opts.eventTitle} — see you on event day!`,
+    }
+  );
+  const text = `Dear ${opts.fullName},\n\nThank you for registering for ${opts.eventTitle}.\n\nEvent: ${opts.eventTitle}\nDate: ${eventDate} · ${formatEventTime(opts.eventDate)}${opts.location ? `\nLocation: ${opts.location}` : ""}\n${opts.meetLink ? `\nGoogle Meet: ${opts.meetLink}` : ""}${opts.whatsappLink ? `\nWhatsApp Community: ${opts.whatsappLink}` : ""}\n\nWe're excited to have you with us. Please save this email for your records.\n\nWarm regards,\n${opts.fromName}\nPresident, Adeyinka Bakare Fellowship`;
+  return { subject: `You're Registered — ${opts.eventTitle}`, html, text };
+}
+
+/**
+ * Event reminder email sent to all registrants before/during the event day.
+ * Branded as from Glory Adeniran, ABF President.
+ */
+export function sendEventReminderEmail(opts: {
+  fullName: string;
+  email: string;
+  eventTitle: string;
+  eventDate: string;
+presidentImage?: string | null;
+  location?: string;
+  meetLink?: string;
+  fromName: string;
+  siteUrl: string;
+  reminderType?: "day_before" | "day_of";
+}) {
+  const eventDate = formatEventDate(opts.eventDate);
+  const timeStr = formatEventTime(opts.eventDate);
+  const isDayOf = opts.reminderType === "day_of";
+  const html = baseEmailLayout(
+    `<p style="margin:0 0 16px">Dear ${esc(opts.fullName)},</p>
+    ${isDayOf ? `<p style="margin:0 0 16px"><strong>Today is the day!</strong> Your event starts soon.</p>` : `<p style="margin:0 0 16px">This is a friendly reminder about the event happening soon.</p>`}
+    <div style="background:#fff9eb;border:1px solid #f0e6d8;border-radius:12px;padding:14px 16px;font-size:13px;color:#2d1816">
+      <strong style="color:#2d1816">Event Reminder</strong><br/>
+      <strong>Event:</strong> ${esc(opts.eventTitle)}<br/>
+      <strong>Date:</strong> ${eventDate}<br/>
+      <strong>Time:</strong> ${timeStr}${opts.location ? `<br/><strong>Location:</strong> ${esc(opts.location)}` : ""}
+    </div>
+    ${opts.meetLink ? `<p style="margin:16px 0 8px">Join the session via Google Meet:</p><p style="margin:0 0 16px"><a href="${esc(opts.meetLink)}" style="display:inline-block;background:#aa322b;color:#fff;text-decoration:none;padding:10px 20px;border-radius:999px;font-weight:700;font-size:13px">Join Google Meet →</a></p><p style="margin:0 0 16px;color:#6b5b55;font-size:12px">Copy and paste this link if the button doesn't work: ${esc(opts.meetLink)}</p>` : ""}
+    ${presidentSignature({ fromName: opts.fromName, presidentImage: opts.presidentImage })}`,
+    {
+      title: isDayOf ? `Today: ${esc(opts.eventTitle)}` : `Reminder: ${esc(opts.eventTitle)}`,
+      subtitle: isDayOf ? "The event is happening today!" : "See you soon at the event!",
+      preheader: isDayOf ? "The event is happening today — join us!" : "Friendly reminder about your upcoming event.",
+    }
+  );
+  const text = `Dear ${opts.fullName},\n\n${isDayOf ? "Today is the day! " : ""}Your event ${opts.eventTitle} is happening.\n\nEvent: ${opts.eventTitle}\nDate: ${eventDate}\nTime: ${timeStr}${opts.location ? `\nLocation: ${opts.location}` : ""}\n${opts.meetLink ? `\nGoogle Meet: ${opts.meetLink}` : ""}\n\nWarm regards,\n${opts.fromName}\nPresident, Adeyinka Bakare Fellowship`;
+  return { subject: isDayOf ? `Today: ${opts.eventTitle}` : `Reminder: ${opts.eventTitle}`, html, text };
+}
+
+/**
+ * Google Meet link email — sent to registrants with the meet link for the event.
+ */
+export function sendEventMeetLinkEmail(opts: {
+  fullName: string;
+  email: string;
+  eventTitle: string;
+  eventDate: string;
+presidentImage?: string | null;
+  meetLink: string;
+  fromName: string;
+}) {
+  const eventDate = formatEventDate(opts.eventDate);
+  const html = baseEmailLayout(
+    `<p style="margin:0 0 16px">Dear ${esc(opts.fullName)},</p>
+    <p style="margin:0 0 16px">Your Google Meet link for <strong>${esc(opts.eventTitle)}</strong> is ready.</p>
+    <div style="text-align:center;padding:20px 0">
+      <a href="${esc(opts.meetLink)}" style="display:inline-block;background:#aa322b;color:#fff;text-decoration:none;padding:14px 30px;border-radius:999px;font-weight:800;font-size:15px;letter-spacing:.02em">Join Google Meet →</a>
+    </div>
+    <p style="margin:0 0 8px;color:#6b5b55;font-size:12px">Event: ${esc(opts.eventTitle)}</p>
+    <p style="margin:0 0 8px;color:#6b5b55;font-size:12px">Date: ${eventDate}</p>
+    <p style="margin:0 0 16px;color:#6b5b55;font-size:12px">Link: ${esc(opts.meetLink)}</p>
+    ${presidentSignature({ fromName: opts.fromName, presidentImage: opts.presidentImage })}`,
+    {
+      title: `Google Meet Link — ${esc(opts.eventTitle)}`,
+      subtitle: "Your virtual meeting link is ready",
+      preheader: "Use this link to join the online session",
+    }
+  );
+  const text = `Dear ${opts.fullName},\n\nYour Google Meet link for ${opts.eventTitle} (${eventDate} · ${formatEventTime(opts.eventDate)}):\n\n${opts.meetLink}\n\nWarm regards,\n${opts.fromName}\nPresident, Adeyinka Bakare Fellowship`;
+  return { subject: `Meet Link: ${opts.eventTitle}`, html, text };
 }

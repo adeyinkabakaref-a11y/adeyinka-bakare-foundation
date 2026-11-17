@@ -171,7 +171,7 @@ made:
                                  separately from the page code, so pages
                                  stay fast to load.
 
-  A dedicated ABF domain +       e.g. adeyinkabakarefellowship.org ---
+  A dedicated ABF domain +       e.g. abfimpact.org ---
   professional email             gives ABF one official web address and
                                  @\[domain\] email, central to standing
                                  apart from similarly named

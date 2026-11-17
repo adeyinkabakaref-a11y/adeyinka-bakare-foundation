@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, FileText, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { LoadingState } from "@/components/admin/loading-state";
 import { ImageUpload } from "@/components/admin/image-upload";
 import { PageHeader } from "@/components/admin/page-header";
+import { fromEventDateTimeLocal, toEventDateTimeLocal } from "@/lib/utils/dates";
 
 interface Event {
   id: string;
@@ -32,6 +33,11 @@ interface Event {
   image?: string;
   status: "draft" | "published" | "archived";
   featured: boolean;
+  meet_link?: string | null;
+  president_name?: string | null;
+  president_image?: string | null;
+  whatsapp_link?: string | null;
+  email_from_name?: string | null;
 }
 
 export default function EditEventPage() {
@@ -53,6 +59,11 @@ export default function EditEventPage() {
     image: "",
     status: "draft",
     featured: false,
+    meet_link: "",
+    president_name: "",
+    president_image: "",
+    whatsapp_link: "",
+    email_from_name: "",
   });
 
   const generateSlug = (title: string) => {
@@ -87,14 +98,19 @@ export default function EditEventPage() {
           slug: data.slug,
           description: data.description,
           location: data.location || "",
-          start_at: data.start_at ? data.start_at.slice(0,16) : "",
-          end_at: data.end_at ? data.end_at.slice(0,16) : "",
+          start_at: toEventDateTimeLocal(data.start_at),
+          end_at: toEventDateTimeLocal(data.end_at),
           image: data.image || "",
           status: data.status,
           featured: data.featured,
+          meet_link: data.meet_link || "",
+          president_name: data.president_name || "",
+          president_image: data.president_image || "",
+          whatsapp_link: data.whatsapp_link || "",
+          email_from_name: data.email_from_name || "",
         });
-      } catch (error: any) {
-        toast({ variant: "destructive", title: "Error", description: error.message || "Failed to load event" });
+      } catch (error) {
+        toast({ variant: "destructive", title: "Error", description: error instanceof Error ? error.message : "Failed to load event" });
       } finally {
         setLoading(false);
       }
@@ -142,18 +158,27 @@ export default function EditEventPage() {
     if (!validateForm()) return;
     try {
       setSubmitting(true);
+      // Convert empty strings to null for optional URL fields
+      const payload = {
+        ...formData,
+        start_at: fromEventDateTimeLocal(formData.start_at),
+ end_at: formData.end_at ? fromEventDateTimeLocal(formData.end_at) : null,
+ image: formData.image || null,
+        meet_link: formData.meet_link || null,
+        president_image: formData.president_image || null,
+      };
       const res = await fetch(`/api/admin/events/${params.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
       const j = await res.json();
       if (!j.success) throw new Error(j.error || "Failed to update event");
       toast({ title: "Success", description: "Event updated successfully" });
       router.push("/admin/events");
       router.refresh();
-    } catch (error: any) {
-      toast({ variant: "destructive", title: "Error", description: error.message || "Failed to update event" });
+    } catch (error) {
+      toast({ variant: "destructive", title: "Error", description: error instanceof Error ? error.message : "Failed to update event" });
     } finally {
       setSubmitting(false);
     }
@@ -172,7 +197,15 @@ export default function EditEventPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageHeader title="Edit Event" subtitle="Update event information" backHref="/admin/events" />
+      <PageHeader
+ title="Edit Event"
+ subtitle="Update event information"
+ backHref="/admin/events"
+ actions={[
+ { label: "Manage Forms", href: `/admin/events/${params.id}/forms`, icon: FileText, variant: "secondary" },
+ { label: "View Responses", href: `/admin/events/${params.id}/responses`, icon: BarChart3, variant: "secondary" },
+ ]}
+ />
 
       <Card className="border-border bg-card">
         <CardHeader>
@@ -319,6 +352,32 @@ export default function EditEventPage() {
               )}
             </div>
 
+<div className="border-t border-border pt-5">
+  <h3 className="text-sm font-semibold text-foreground mb-4">Event Details</h3>
+  <div className="grid gap-4 md:grid-cols-2">
+    <div className="space-y-1.5">
+      <Label htmlFor="meet_link">Google Meet Link</Label>
+      <Input id="meet_link" type="url" value={formData.meet_link} onChange={(e) => handleInputChange("meet_link", e.target.value)} placeholder="https://meet.google.com/..." disabled={submitting} />
+    </div>
+    <div className="space-y-1.5">
+      <Label htmlFor="email_from_name">Email From Name</Label>
+      <Input id="email_from_name" value={formData.email_from_name} onChange={(e) => handleInputChange("email_from_name", e.target.value)} placeholder="Glory Adeniran" disabled={submitting} />
+    </div>
+    <div className="space-y-1.5">
+      <Label htmlFor="president_name">President Name</Label>
+      <Input id="president_name" value={formData.president_name} onChange={(e) => handleInputChange("president_name", e.target.value)} placeholder="Glory Adeniran" disabled={submitting} />
+    </div>
+    <div className="space-y-1.5">
+      <Label htmlFor="president_image">President Image URL</Label>
+      <Input id="president_image" type="url" value={formData.president_image} onChange={(e) => handleInputChange("president_image", e.target.value)} placeholder="https://..." disabled={submitting} />
+    </div>
+    <div className="space-y-1.5 md:col-span-2">
+      <Label htmlFor="whatsapp_link">WhatsApp Community Link</Label>
+      <Input id="whatsapp_link" type="url" value={formData.whatsapp_link} onChange={(e) => handleInputChange("whatsapp_link", e.target.value)} placeholder="https://chat.whatsapp.com/..." disabled={submitting} />
+    </div>
+  </div>
+</div>
+
             <div className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-4">
               <Switch
                 id="featured"
@@ -359,6 +418,7 @@ export default function EditEventPage() {
           </form>
         </CardContent>
       </Card>
-    </div>
-  );
+
+</div>
+);
 }

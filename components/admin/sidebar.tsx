@@ -18,6 +18,7 @@ import {
   Newspaper,
   Image as ImageIcon,
   FileText,
+  BarChart3,
   Layout,
   Share2,
   Settings,

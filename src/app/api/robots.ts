@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://adeyinkabakarefellowship.org/sitemap.xml",
+    sitemap: "https://abfimpact.org/sitemap.xml",
   };
 }

@@ -17,9 +17,11 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 async function getEvents() {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/public/events`, {
+    const response = await fetch(`${SITE_URL}/api/public/events`, {
       cache: "no-store",
     });
 

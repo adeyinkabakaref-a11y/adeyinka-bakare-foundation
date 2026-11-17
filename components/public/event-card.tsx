@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
-import { format } from "date-fns";
+import { formatEventDate, formatEventTime } from "@/lib/utils/dates";
 
 interface EventCardProps {
   event: {
@@ -18,8 +18,8 @@ interface EventCardProps {
 
 export function EventCard({ event }: EventCardProps) {
   const startDate = new Date(event.start_at);
-  const formattedDate = format(startDate, "MMM d, yyyy");
-  const formattedTime = format(startDate, "h:mm a");
+  const formattedDate = formatEventDate(startDate, { month: "short", day: "numeric", year: "numeric" });
+  const formattedTime = formatEventTime(startDate);
 
   return (
     <Link

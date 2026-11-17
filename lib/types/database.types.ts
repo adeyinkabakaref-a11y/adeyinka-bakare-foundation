@@ -1,660 +1,866 @@
 export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[];
+ | string
+ | number
+ | boolean
+ | null
+ | { [key: string]: Json | undefined }
+ | Json[];
 
 export interface Database {
-  public: {
-    Tables: {
-      profiles: {
-        Row: {
-          id: string;
-          full_name: string;
-          role: "super_admin" | "admin" | "editor";
-          status: "active" | "inactive" | "suspended";
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id: string;
-          full_name: string;
-          role?: "super_admin" | "admin" | "editor";
-          status?: "active" | "inactive" | "suspended";
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          full_name?: string;
-          role?: "super_admin" | "admin" | "editor";
-          status?: "active" | "inactive" | "suspended";
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      members: {
-        Row: {
-          id: string;
-          full_name: string;
-          email: string | null;
-          phone: string | null;
-          department: string | null;
-          level: string | null;
-          session: string | null;
-          photo: string | null;
-          status: "active" | "inactive" | "graduated" | "archived";
-          joined_at: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          full_name: string;
-          email?: string | null;
-          phone?: string | null;
-          department?: string | null;
-          level?: string | null;
-          session?: string | null;
-          photo?: string | null;
-          status?: "active" | "inactive" | "graduated" | "archived";
-          joined_at?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          full_name?: string;
-          email?: string | null;
-          phone?: string | null;
-          department?: string | null;
-          level?: string | null;
-          session?: string | null;
-          photo?: string | null;
-          status?: "active" | "inactive" | "graduated" | "archived";
-          joined_at?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      volunteers: {
-        Row: {
-          id: string;
-          full_name: string;
-          email: string;
-          phone: string | null;
-          department: string | null;
-          level: string | null;
-          interest: string | null;
-          message: string | null;
-          status: "new" | "contacted" | "accepted" | "rejected" | "archived";
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          full_name: string;
-          email: string;
-          phone?: string | null;
-          department?: string | null;
-          level?: string | null;
-          interest?: string | null;
-          message?: string | null;
-          status?: "new" | "contacted" | "accepted" | "rejected" | "archived";
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          full_name?: string;
-          email?: string;
-          phone?: string | null;
-          department?: string | null;
-          level?: string | null;
-          interest?: string | null;
-          message?: string | null;
-          status?: "new" | "contacted" | "accepted" | "rejected" | "archived";
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      programmes: {
-        Row: {
-          id: string;
-          title: string;
-          slug: string;
-          description: string;
-          image: string | null;
-          status: "draft" | "published" | "archived";
-          featured: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          title: string;
-          slug: string;
-          description: string;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          title?: string;
-          slug?: string;
-          description?: string;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      beneficiaries: {
-        Row: {
-          id: string;
-          full_name: string;
-          department: string | null;
-          level: string | null;
-          session: string | null;
-          programme: string | null;
-          photo: string | null;
-          bio: string | null;
-          status: "draft" | "published" | "archived";
-          featured: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          full_name: string;
-          department?: string | null;
-          level?: string | null;
-          session?: string | null;
-          programme?: string | null;
-          photo?: string | null;
-          bio?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          full_name?: string;
-          department?: string | null;
-          level?: string | null;
-          session?: string | null;
-          programme?: string | null;
-          photo?: string | null;
-          bio?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      testimonials: {
-        Row: {
-          id: string;
-          beneficiary_id: string | null;
-          content: string;
-          media_url: string | null;
-          media_type: "image" | "audio" | "video" | "document" | "other" | null;
-          featured: boolean;
-          status: "draft" | "published" | "archived";
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          beneficiary_id?: string | null;
-          content: string;
-          media_url?: string | null;
-          media_type?: "image" | "audio" | "video" | "document" | "other" | null;
-          featured?: boolean;
-          status?: "draft" | "published" | "archived";
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          beneficiary_id?: string | null;
-          content?: string;
-          media_url?: string | null;
-          media_type?: "image" | "audio" | "video" | "document" | "other" | null;
-          featured?: boolean;
-          status?: "draft" | "published" | "archived";
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      events: {
-        Row: {
-          id: string;
-          title: string;
-          slug: string;
-          description: string;
-          location: string | null;
-          start_at: string;
-          end_at: string | null;
-          image: string | null;
-          status: "draft" | "published" | "archived";
-          featured: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          title: string;
-          slug: string;
-          description: string;
-          location?: string | null;
-          start_at: string;
-          end_at?: string | null;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          title?: string;
-          slug?: string;
-          description?: string;
-          location?: string | null;
-          start_at?: string;
-          end_at?: string | null;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      news: {
-        Row: {
-          id: string;
-          title: string;
-          slug: string;
-          excerpt: string | null;
-          content: string;
-          image: string | null;
-          author_id: string | null;
-          status: "draft" | "published" | "archived";
-          published_at: string | null;
-          featured: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          title: string;
-          slug: string;
-          excerpt?: string | null;
-          content: string;
-          image?: string | null;
-          author_id?: string | null;
-          status?: "draft" | "published" | "archived";
-          published_at?: string | null;
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          title?: string;
-          slug?: string;
-          excerpt?: string | null;
-          content?: string;
-          image?: string | null;
-          author_id?: string | null;
-          status?: "draft" | "published" | "archived";
-          published_at?: string | null;
-          featured?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      media: {
-        Row: {
-          id: string;
-          filename: string;
-          storage_path: string;
-          type: "image" | "audio" | "video" | "document" | "other";
-          mime_type: string | null;
-          size_bytes: number | null;
-          uploaded_by: string | null;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          filename: string;
-          storage_path: string;
-          type: "image" | "audio" | "video" | "document" | "other";
-          mime_type?: string | null;
-          size_bytes?: number | null;
-          uploaded_by?: string | null;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          filename?: string;
-          storage_path?: string;
-          type?: "image" | "audio" | "video" | "document" | "other";
-          mime_type?: string | null;
-          size_bytes?: number | null;
-          uploaded_by?: string | null;
-          created_at?: string;
-        };
-      };
-      contents: {
-        Row: {
-          id: string;
-          key: string;
-          title: string | null;
-          content: string | null;
-          image: string | null;
-          status: "draft" | "published" | "archived";
-          updated_by: string | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          key: string;
-          title?: string | null;
-          content?: string | null;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          updated_by?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          key?: string;
-          title?: string | null;
-          content?: string | null;
-          image?: string | null;
-          status?: "draft" | "published" | "archived";
-          updated_by?: string | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      footer_sections: {
-        Row: {
-          id: string;
-          title: string;
-          sort_order: number;
-          is_active: boolean;
-        };
-        Insert: {
-          id?: string;
-          title: string;
-          sort_order?: number;
-          is_active?: boolean;
-        };
-        Update: {
-          id?: string;
-          title?: string;
-          sort_order?: number;
-          is_active?: boolean;
-        };
-      };
-      footer_links: {
-        Row: {
-          id: string;
-          section_id: string;
-          label: string;
-          url: string;
-          sort_order: number;
-          is_active: boolean;
-        };
-        Insert: {
-          id?: string;
-          section_id: string;
-          label: string;
-          url: string;
-          sort_order?: number;
-          is_active?: boolean;
-        };
-        Update: {
-          id?: string;
-          section_id?: string;
-          label?: string;
-          url?: string;
-          sort_order?: number;
-          is_active?: boolean;
-        };
-      };
-      site_settings: {
-        Row: {
-          id: string;
-          site_name: string;
-          tagline: string | null;
-          logo: string | null;
-          favicon: string | null;
-          email: string | null;
-          phone: string | null;
-          address: string | null;
-          whatsapp: string | null;
-          updated_by: string | null;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          site_name: string;
-          tagline?: string | null;
-          logo?: string | null;
-          favicon?: string | null;
-          email?: string | null;
-          phone?: string | null;
-          address?: string | null;
-          whatsapp?: string | null;
-          updated_by?: string | null;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          site_name?: string;
-          tagline?: string | null;
-          logo?: string | null;
-          favicon?: string | null;
-          email?: string | null;
-          phone?: string | null;
-          address?: string | null;
-          whatsapp?: string | null;
-          updated_by?: string | null;
-          updated_at?: string;
-        };
-      };
-      social_links: {
-        Row: {
-          id: string;
-          platform: string;
-          url: string;
-          is_active: boolean;
-          sort_order: number;
-        };
-        Insert: {
-          id?: string;
-          platform: string;
-          url: string;
-          is_active?: boolean;
-          sort_order?: number;
-        };
-        Update: {
-          id?: string;
-          platform?: string;
-          url?: string;
-          is_active?: boolean;
-          sort_order?: number;
-        };
-      };
-      notifications: {
-        Row: {
-          id: string;
-          recipient_id: string;
-          type: string;
-          title: string;
-          message: string;
-          data: Json;
-          read_at: string | null;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          recipient_id: string;
-          type: string;
-          title: string;
-          message: string;
-          data?: Json;
-          read_at?: string | null;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          recipient_id?: string;
-          type?: string;
-          title?: string;
-          message?: string;
-          data?: Json;
-          read_at?: string | null;
-          created_at?: string;
-        };
-      };
-      audit_logs: {
-        Row: {
-          id: string;
-          actor_id: string | null;
-          action: string;
-          entity: string;
-          entity_id: string | null;
-          old_data: Json | null;
-          new_data: Json | null;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          actor_id?: string | null;
-          action: string;
-          entity: string;
-          entity_id?: string | null;
-          old_data?: Json | null;
-          new_data?: Json | null;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          actor_id?: string | null;
-          action?: string;
-          entity?: string;
-          entity_id?: string | null;
-          old_data?: Json | null;
-          new_data?: Json | null;
-          created_at?: string;
-        };
-      };
-      admin_mfa: {
-        Row: {
-          id: string;
-          admin_id: string;
-          totp_enabled: boolean;
-          encrypted_totp_secret: string | null;
-          email_otp_enabled: boolean;
-          passkey_enabled: boolean;
-          mfa_required: boolean;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          admin_id: string;
-          totp_enabled?: boolean;
-          encrypted_totp_secret?: string | null;
-          email_otp_enabled?: boolean;
-          passkey_enabled?: boolean;
-          mfa_required?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          admin_id?: string;
-          totp_enabled?: boolean;
-          encrypted_totp_secret?: string | null;
-          email_otp_enabled?: boolean;
-          passkey_enabled?: boolean;
-          mfa_required?: boolean;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
-      admin_passkeys: {
-        Row: {
-          id: string;
-          admin_id: string;
-          credential_id: string;
-          public_key: Buffer;
-          counter: number;
-          device_name: string | null;
-          last_used_at: string | null;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          admin_id: string;
-          credential_id: string;
-          public_key: Buffer;
-          counter?: number;
-          device_name?: string | null;
-          last_used_at?: string | null;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          admin_id?: string;
-          credential_id?: string;
-          public_key?: Buffer;
-          counter?: number;
-          device_name?: string | null;
-          last_used_at?: string | null;
-          created_at?: string;
-        };
-      };
-      mfa_recovery_codes: {
-        Row: {
-          id: string;
-          admin_id: string;
-          code_hash: string;
-          used_at: string | null;
-          created_at: string;
-        };
-        Insert: {
-          id?: string;
-          admin_id: string;
-          code_hash: string;
-          used_at?: string | null;
-          created_at?: string;
-        };
-        Update: {
-          id?: string;
-          admin_id?: string;
-          code_hash?: string;
-          used_at?: string | null;
-          created_at?: string;
-        };
-      };
+ public: {
+  Tables: {
+   profiles: {
+    Row: {
+     id: string;
+     full_name: string;
+     role: "super_admin" | "admin" | "editor";
+     status: "active" | "inactive" | "suspended";
+     created_at: string;
+     updated_at: string;
     };
+    Insert: {
+     id?: string;
+     full_name: string;
+     role?: "super_admin" | "admin" | "editor";
+     status?: "active" | "inactive" | "suspended";
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     full_name?: string;
+     role?: "super_admin" | "admin" | "editor";
+     status?: "active" | "inactive" | "suspended";
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   members: {
+    Row: {
+     id: string;
+     full_name: string;
+     email: string | null;
+     phone: string | null;
+     department: string | null;
+     level: string | null;
+     session: string | null;
+     photo: string | null;
+     status: "active" | "inactive" | "graduated" | "archived";
+     joined_at: string | null;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     full_name: string;
+     email?: string | null;
+     phone?: string | null;
+     department?: string | null;
+     level?: string | null;
+     session?: string | null;
+     photo?: string | null;
+     status?: "active" | "inactive" | "graduated" | "archived";
+     joined_at?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     full_name?: string;
+     email?: string | null;
+     phone?: string | null;
+     department?: string | null;
+     level?: string | null;
+     session?: string | null;
+     photo?: string | null;
+     status?: "active" | "inactive" | "graduated" | "archived";
+     joined_at?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   volunteers: {
+    Row: {
+     id: string;
+     full_name: string;
+     email: string;
+     phone: string | null;
+     department: string | null;
+     level: string | null;
+     interest: string | null;
+     message: string | null;
+     status: "new" | "contacted" | "accepted" | "rejected" | "archived";
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     full_name: string;
+     email: string;
+     phone?: string | null;
+     department?: string | null;
+     level?: string | null;
+     interest?: string | null;
+     message?: string | null;
+     status?: "new" | "contacted" | "accepted" | "rejected" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     full_name?: string;
+     email?: string;
+     phone?: string | null;
+     department?: string | null;
+     level?: string | null;
+     interest?: string | null;
+     message?: string | null;
+     status?: "new" | "contacted" | "accepted" | "rejected" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   events: {
+    Row: {
+     id: string;
+     title: string;
+     slug: string;
+     description: string;
+     location: string | null;
+     start_at: string;
+     end_at: string | null;
+     image: string | null;
+     status: "draft" | "published" | "archived";
+     featured: boolean;
+     created_at: string;
+     updated_at: string;
+     meet_link: string | null;
+     president_name: string | null;
+     president_image: string | null;
+     whatsapp_link: string | null;
+     email_from_name: string | null;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     slug: string;
+     description: string;
+     location?: string | null;
+     start_at: string;
+     end_at?: string | null;
+     image?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     meet_link?: string | null;
+     president_name?: string | null;
+     president_image?: string | null;
+     whatsapp_link?: string | null;
+     email_from_name?: string | null;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     slug?: string;
+     description?: string;
+     location?: string | null;
+     start_at?: string;
+     end_at?: string | null;
+     image?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     meet_link?: string | null;
+     president_name?: string | null;
+     president_image?: string | null;
+     whatsapp_link?: string | null;
+     email_from_name?: string | null;
+    };
+   };
+   news: {
+    Row: {
+     id: string;
+     title: string;
+     slug: string;
+     excerpt: string | null;
+     content: string;
+     image: string | null;
+     author_id: string | null;
+     status: "draft" | "published" | "archived";
+     published_at: string | null;
+     featured: boolean;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     slug: string;
+     excerpt?: string | null;
+     content: string;
+     image?: string | null;
+     author_id?: string | null;
+     status?: "draft" | "published" | "archived";
+     published_at?: string | null;
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     slug?: string;
+     excerpt?: string | null;
+     content?: string;
+     image?: string | null;
+     author_id?: string | null;
+     status?: "draft" | "published" | "archived";
+     published_at?: string | null;
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   testimonials: {
+    Row: {
+     id: string;
+     name: string;
+     role: string | null;
+     message: string;
+     photo: string | null;
+     status: "draft" | "published" | "archived";
+     featured: boolean;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     name: string;
+     role?: string | null;
+     message: string;
+     photo?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     name?: string;
+     role?: string | null;
+     message?: string;
+     photo?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   beneficiaries: {
+    Row: {
+     id: string;
+     full_name: string;
+     photo: string | null;
+     department: string | null;
+     level: string | null;
+     session: string | null;
+     scholarship_type: string | null;
+     amount: string | null;
+     story: string | null;
+     status: "active" | "inactive" | "graduated";
+     featured: boolean;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     full_name: string;
+     photo?: string | null;
+     department?: string | null;
+     level?: string | null;
+     session?: string | null;
+     scholarship_type?: string | null;
+     amount?: string | null;
+     story?: string | null;
+     status?: "active" | "inactive" | "graduated";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     full_name?: string;
+     photo?: string | null;
+     department?: string | null;
+     level?: string | null;
+     session?: string | null;
+     scholarship_type?: string | null;
+     amount?: string | null;
+     story?: string | null;
+     status?: "active" | "inactive" | "graduated";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   programmes: {
+    Row: {
+     id: string;
+     title: string;
+     slug: string;
+     short_description: string | null;
+     description: string;
+     image: string | null;
+     location: string | null;
+     status: "draft" | "published" | "archived";
+     featured: boolean;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     slug: string;
+     short_description?: string | null;
+     description: string;
+     image?: string | null;
+     location?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     slug?: string;
+     short_description?: string | null;
+     description?: string;
+     image?: string | null;
+     location?: string | null;
+     status?: "draft" | "published" | "archived";
+     featured?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   contents: {
+    Row: {
+     id: string;
+     title: string;
+     slug: string;
+     content: string;
+     image: string | null;
+     status: "draft" | "published" | "archived";
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     slug: string;
+     content: string;
+     image?: string | null;
+     status?: "draft" | "published" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     slug?: string;
+     content?: string;
+     image?: string | null;
+     status?: "draft" | "published" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   media: {
+    Row: {
+     id: string;
+     title: string;
+     slug: string;
+     file_url: string;
+     thumbnail_url: string | null;
+     media_type: "image" | "video" | "document";
+     alt_text: string | null;
+     status: "draft" | "published" | "archived";
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     slug: string;
+     file_url: string;
+     thumbnail_url?: string | null;
+     media_type?: "image" | "video" | "document";
+     alt_text?: string | null;
+     status?: "draft" | "published" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     slug?: string;
+     file_url?: string;
+     thumbnail_url?: string | null;
+     media_type?: "image" | "video" | "document";
+     alt_text?: string | null;
+     status?: "draft" | "published" | "archived";
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   footer_sections: {
+    Row: {
+     id: string;
+     title: string;
+     content: string;
+     display_order: number;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     title: string;
+     content: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     title?: string;
+     content?: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   footer_links: {
+    Row: {
+     id: string;
+     footer_section_id: string;
+     label: string;
+     url: string;
+     display_order: number;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     footer_section_id: string;
+     label: string;
+     url: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     footer_section_id?: string;
+     label?: string;
+     url?: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   social_links: {
+    Row: {
+     id: string;
+     platform: string;
+     url: string;
+     display_order: number;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     platform: string;
+     url: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     platform?: string;
+     url?: string;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   site_settings: {
+    Row: {
+     id: string;
+     logo: string | null;
+     site_name: string | null;
+     tagline: string | null;
+     description: string | null;
+     address: string | null;
+     phone: string | null;
+     email: string | null;
+     facebook: string | null;
+     instagram: string | null;
+     twitter: string | null;
+     linkedin: string | null;
+     youtube: string | null;
+     updated_by: string | null;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     logo?: string | null;
+     site_name?: string | null;
+     tagline?: string | null;
+     description?: string | null;
+     address?: string | null;
+     phone?: string | null;
+     email?: string | null;
+     facebook?: string | null;
+     instagram?: string | null;
+     twitter?: string | null;
+     linkedin?: string | null;
+     youtube?: string | null;
+     updated_by?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     logo?: string | null;
+     site_name?: string | null;
+     tagline?: string | null;
+     description?: string | null;
+     address?: string | null;
+     phone?: string | null;
+     email?: string | null;
+     facebook?: string | null;
+     instagram?: string | null;
+     twitter?: string | null;
+     linkedin?: string | null;
+     youtube?: string | null;
+     updated_by?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   notifications: {
+    Row: {
+     id: string;
+     recipient_id: string;
+     type: string;
+     title: string;
+     message: string;
+     data: Json | null;
+     read: boolean;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     recipient_id: string;
+     type?: string;
+     title: string;
+     message: string;
+     data?: Json | null;
+     read?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     recipient_id?: string;
+     type?: string;
+     title?: string;
+     message?: string;
+     data?: Json | null;
+     read?: boolean;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   email_logs: {
+    Row: {
+     id: string;
+     to_email: string;
+     to_name: string | null;
+     subject: string;
+     template: string;
+     html_preview: string | null;
+     status: string;
+     provider: string;
+     provider_id: string | null;
+     metadata: Json | null;
+     created_by: string | null;
+     error: string | null;
+     created_at: string;
+    };
+    Insert: {
+     id?: string;
+     to_email: string;
+     to_name?: string | null;
+     subject: string;
+     template: string;
+     html_preview?: string | null;
+     status?: string;
+     provider?: string;
+     provider_id?: string | null;
+     metadata?: Json | null;
+     created_by?: string | null;
+     error?: string | null;
+     created_at?: string;
+    };
+    Update: {
+     id?: string;
+     to_email?: string;
+     to_name?: string | null;
+     subject?: string;
+     template?: string;
+     html_preview?: string | null;
+     status?: string;
+     provider?: string;
+     provider_id?: string | null;
+     metadata?: Json | null;
+     created_by?: string | null;
+     error?: string | null;
+     created_at?: string;
+    };
+   };
+   /**
+    * Event forms for each event — admins create forms per event
+    */
+   event_forms: {
+    Row: {
+     id: string;
+     event_id: string;
+     title: string;
+     description: string | null;
+     status: "active" | "inactive" | "closed";
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     event_id: string;
+     title: string;
+     description?: string | null;
+     status?: "active" | "inactive" | "closed";
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     event_id?: string;
+     title?: string;
+     description?: string | null;
+     status?: "active" | "inactive" | "closed";
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   /**
+    * Dynamic form fields per form
+    */
+   form_fields: {
+    Row: {
+     id: string;
+     form_id: string;
+     label: string;
+     field_type: "text" | "email" | "phone" | "number" | "textarea" | "select" | "date" | "url" | "file";
+     required: boolean;
+     options: Json | null;
+     placeholder: string | null;
+     display_order: number;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     form_id: string;
+     label: string;
+     field_type: "text" | "email" | "phone" | "number" | "textarea" | "select" | "date" | "url" | "file";
+     required?: boolean;
+     options?: Json | null;
+     placeholder?: string | null;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     form_id?: string;
+     label?: string;
+     field_type?: "text" | "email" | "phone" | "number" | "textarea" | "select" | "date" | "url" | "file";
+     required?: boolean;
+     options?: Json | null;
+     placeholder?: string | null;
+     display_order?: number;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   /**
+    * Form responses — submitted applications
+    */
+   form_responses: {
+    Row: {
+     id: string;
+     form_id: string;
+     event_id: string;
+     full_name: string;
+     email: string;
+     phone: string | null;
+     responses: Json;
+     submitted_at: string;
+     ip_address: string | null;
+     user_agent: string | null;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     form_id: string;
+     event_id: string;
+     full_name: string;
+     email: string;
+     phone?: string | null;
+     responses?: Json;
+     submitted_at?: string;
+     ip_address?: string | null;
+     user_agent?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     form_id?: string;
+     event_id?: string;
+     full_name?: string;
+     email?: string;
+     phone?: string | null;
+     responses?: Json;
+     submitted_at?: string;
+     ip_address?: string | null;
+     user_agent?: string | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   admin_mfa: {
+    Row: {
+     id: string;
+     admin_id: string;
+     totp_secret: string | null;
+     totp_enabled: boolean;
+     email_verified: boolean;
+     email_mfa_enabled: boolean;
+     email_mfa_code: string | null;
+     email_mfa_expires_at: string | null;
+     backup_codes: string[] | null;
+     created_at: string;
+     updated_at: string;
+    };
+    Insert: {
+     id?: string;
+     admin_id: string;
+     totp_secret?: string | null;
+     totp_enabled?: boolean;
+     email_verified?: boolean;
+     email_mfa_enabled?: boolean;
+     email_mfa_code?: string | null;
+     email_mfa_expires_at?: string | null;
+     backup_codes?: string[] | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+    Update: {
+     id?: string;
+     admin_id?: string;
+     totp_secret?: string | null;
+     totp_enabled?: boolean;
+     email_verified?: boolean;
+     email_mfa_enabled?: boolean;
+     email_mfa_code?: string | null;
+     email_mfa_expires_at?: string | null;
+     backup_codes?: string[] | null;
+     created_at?: string;
+     updated_at?: string;
+    };
+   };
+   admin_passkeys: {
+    Row: {
+     id: string;
+     admin_id: string;
+     credential_id: string;
+     public_key: string;
+     counter: number;
+     device_name: string | null;
+     last_used_at: string | null;
+     created_at: string;
+    };
+    Insert: {
+     id?: string;
+     admin_id: string;
+     credential_id: string;
+     public_key: string;
+     counter?: number;
+     device_name?: string | null;
+     last_used_at?: string | null;
+     created_at?: string;
+    };
+    Update: {
+     id?: string;
+     admin_id?: string;
+     credential_id?: string;
+     public_key?: string;
+     counter?: number;
+     device_name?: string | null;
+     last_used_at?: string | null;
+     created_at?: string;
+    };
+   };
+   mfa_recovery_codes: {
+    Row: {
+     id: string;
+     admin_id: string;
+     code_hash: string;
+     used_at: string | null;
+     created_at: string;
+    };
+    Insert: {
+     id?: string;
+     admin_id: string;
+     code_hash: string;
+     used_at?: string | null;
+     created_at?: string;
+    };
+    Update: {
+     id?: string;
+     admin_id?: string;
+     code_hash?: string;
+     used_at?: string | null;
+     created_at?: string;
+    };
+   };
   };
+  Views: {
+   [key: string]: never;
+  };
+  Functions: {
+   [key: string]: never;
+  };
+  Enums: {
+   [key: string]: never;
+  };
+  CompositeTypes: {
+   [key: string]: never;
+  };
+ };
 }
 
 // Export commonly used types for convenience
@@ -691,3 +897,9 @@ export type NotificationInsert = Database["public"]["Tables"]["notifications"]["
 export type NotificationUpdate = Database["public"]["Tables"]["notifications"]["Update"];
 export type ProfileInsert = Database["public"]["Tables"]["profiles"]["Insert"];
 export type ProfileUpdate = Database["public"]["Tables"]["profiles"]["Update"];
+export type EventFormInsert = Database["public"]["Tables"]["event_forms"]["Insert"];
+export type EventFormUpdate = Database["public"]["Tables"]["event_forms"]["Update"];
+export type FormFieldInsert = Database["public"]["Tables"]["form_fields"]["Insert"];
+export type FormFieldUpdate = Database["public"]["Tables"]["form_fields"]["Update"];
+export type FormResponseInsert = Database["public"]["Tables"]["form_responses"]["Insert"];
+export type FormResponseUpdate = Database["public"]["Tables"]["form_responses"]["Update"];
