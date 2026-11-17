@@ -19,6 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { ImageUpload } from "@/components/admin/image-upload";
 import { PageHeader } from "@/components/admin/page-header";
+import { fromEventDateTimeLocal } from "@/lib/utils/dates";
 
 export default function NewEventPage() {
   const router = useRouter();
@@ -36,6 +37,11 @@ export default function NewEventPage() {
     image: "",
     status: "draft",
     featured: false,
+    meet_link: "",
+    president_name: "",
+    president_image: "",
+    whatsapp_link: "",
+    email_from_name: "",
   });
 
   const generateSlug = (title: string) => {
@@ -106,12 +112,16 @@ export default function NewEventPage() {
         slug: formData.slug.trim(),
         description: formData.description.trim(),
         location: formData.location.trim() || null,
-        start_at: formData.start_at,
-        end_at: formData.end_at || null,
+        start_at: fromEventDateTimeLocal(formData.start_at),
+        end_at: formData.end_at ? fromEventDateTimeLocal(formData.end_at) : null,
         image: formData.image.trim() || null,
         status: formData.status,
         featured: formData.featured,
-      };
+      meet_link: formData.meet_link.trim() || null,
+      president_name: formData.president_name.trim() || null,
+      president_image: formData.president_image.trim() || null,
+      whatsapp_link: formData.whatsapp_link.trim() || null,
+      email_from_name: formData.email_from_name.trim() || null,      };
 
       const res = await fetch("/api/admin/events", {
         method: "POST",
@@ -128,14 +138,14 @@ export default function NewEventPage() {
         description: "Event created successfully",
       });
 
-      router.push("/admin/events");
+      router.push(`/admin/events/${json.data.id}/edit`);
       router.refresh();
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error creating event:", error);
       toast({
         variant: "destructive",
         title: "Error",
-        description: error?.message || "Failed to create event",
+        description: error instanceof Error ? error.message : "Failed to create event",
       });
     } finally {
       setLoading(false);
@@ -298,7 +308,33 @@ export default function NewEventPage() {
               )}
             </div>
 
-            <div className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-4">
+            <div className="border-t border-border pt-5">
+              <h3 className="text-sm font-semibold text-foreground mb-4">Event Details</h3>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-1.5">
+                  <Label htmlFor="meet_link">Google Meet Link</Label>
+                  <Input id="meet_link" type="url" value={formData.meet_link} onChange={(e) => handleInputChange("meet_link", e.target.value)} placeholder="https://meet.google.com/..." disabled={loading} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="email_from_name">Email From Name</Label>
+                  <Input id="email_from_name" value={formData.email_from_name} onChange={(e) => handleInputChange("email_from_name", e.target.value)} placeholder="Glory Adeniran" disabled={loading} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="president_name">President Name</Label>
+                  <Input id="president_name" value={formData.president_name} onChange={(e) => handleInputChange("president_name", e.target.value)} placeholder="Glory Adeniran" disabled={loading} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="president_image">President Image URL</Label>
+                  <Input id="president_image" type="url" value={formData.president_image} onChange={(e) => handleInputChange("president_image", e.target.value)} placeholder="https://..." disabled={loading} />
+                </div>
+                <div className="space-y-1.5 md:col-span-2">
+                  <Label htmlFor="whatsapp_link">WhatsApp Community Link</Label>
+                  <Input id="whatsapp_link" type="url" value={formData.whatsapp_link} onChange={(e) => handleInputChange("whatsapp_link", e.target.value)} placeholder="https://chat.whatsapp.com/..." disabled={loading} />
+                </div>
+              </div>
+            </div>
+
+<div className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-4">
               <Switch
                 id="featured"
                 checked={formData.featured}

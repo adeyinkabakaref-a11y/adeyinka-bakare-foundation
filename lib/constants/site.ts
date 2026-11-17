@@ -1,7 +1,7 @@
 export const SITE_CONFIG = {
   name: "Adeyinka Bakare Fellowship",
   tagline: "Empowering students through opportunity and support.",
-  domain: "adeyinkabakarefellowship.org",
+  domain: "abfimpact.org",
 } as const;
 
 export const PAGINATION = {

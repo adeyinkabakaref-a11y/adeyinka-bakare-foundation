@@ -11,6 +11,6 @@ export const externalLinks: Record<ExternalLinkKey, string> = {
   /** Existing Google Form for volunteers and enquiries (proposal, section 3.9). */
   enquiryForm: "",
   whatsappCommunity: "",
-  email: "",
+  email: "join@abfimpact.org",
   phone: "",
 };

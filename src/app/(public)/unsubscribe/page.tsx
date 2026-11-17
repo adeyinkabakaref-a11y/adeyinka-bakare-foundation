@@ -18,9 +18,9 @@ import { UnsubscribeForm } from "./unsubscribe-form";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Unsubscribe | Adeyinka Bakare Foundation",
+  title: "Unsubscribe | Adeyinka Bakare Fellowship",
   description:
-    "Manage your subscription to the Adeyinka Bakare Foundation newsletter.",
+    "Manage your subscription to the Adeyinka Bakare Fellowship newsletter.",
   robots: { index: false, follow: false },
 };
 

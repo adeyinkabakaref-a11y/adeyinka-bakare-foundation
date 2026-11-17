@@ -98,7 +98,7 @@ export default function ProgrammesPage() {
     <div className="flex flex-col gap-5">
       <PageHeader
         title="Programmes"
-        subtitle="Manage foundation programmes"
+        subtitle="Manage fellowship programmes"
         actions={[{ label: "Add Programme", onClick: () => router.push("/admin/programmes/new"), variant: "primary" }]}
       />
 

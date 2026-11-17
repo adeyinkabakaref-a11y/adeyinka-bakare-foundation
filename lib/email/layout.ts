@@ -1,3 +1,5 @@
+import { SOCIAL_LINKS_PLACEHOLDER } from "./social-links";
+
 type EmailLayoutOpts = {
   preheader?: string;
   heroImage?: string;
@@ -27,9 +29,9 @@ const BRAND = {
 const DEFAULT_HERO = process.env.EMAIL_HERO_IMAGE || "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80";
 const DEFAULT_BG = process.env.EMAIL_BG_IMAGE || "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1600&q=60";
 // Logo from env -- change EMAIL_LOGO_URL when ABF domain/logo is ready (provided: https://ibb.co/LhSBgzZK is a page, not a direct image)
-const RAW_LOGO: string = (typeof process !== "undefined" && ((process.env as any).EMAIL_LOGO_URL || (process.env as any).NEXT_PUBLIC_EMAIL_LOGO_URL)) || "https://ibb.co/LhSBgzZK";
+const RAW_LOGO: string = (typeof process !== "undefined" && (process.env.EMAIL_LOGO_URL || process.env.NEXT_PUBLIC_EMAIL_LOGO_URL)) || "https://ibb.co/LhSBgzZK";
 function resolveLogoUrl(raw: string): string {
-  const site = (typeof process !== "undefined" && ((process.env as any).NEXT_PUBLIC_SITE_URL || "https://adeyinkabakare.org")) || "https://adeyinkabakare.org";
+  const site = (typeof process !== "undefined" && (process.env.NEXT_PUBLIC_SITE_URL || "https://abfimpact.org")) || "https://abfimpact.org";
   const fallback = `${site.replace(/\/$/, "")}/brand/logo.png`;
   // ibb.co/LhSBgzZK is a page URL, not a direct image -- fall back to site logo unless a direct image extension is present
   if (raw.includes("ibb.co/LhSBgzZK") && !/\.(png|jpe?g|webp|svg)(\?.*)?$/i.test(raw)) return fallback;
@@ -42,7 +44,7 @@ const LOGO_URL: string = resolveLogoUrl(RAW_LOGO);
 function buildUnsubscribeUrl(recipientEmail?: string, override?: string): string | null {
   if (override) return override;
   if (!recipientEmail) return null;
-  const site = (typeof process !== "undefined" && ((process.env as any).NEXT_PUBLIC_SITE_URL || "https://adeyinkabakare.org")) || "https://adeyinkabakare.org";
+  const site = (typeof process !== "undefined" && (process.env.NEXT_PUBLIC_SITE_URL || "https://abfimpact.org")) || "https://abfimpact.org";
   return `${site.replace(/\/$/, "")}/unsubscribe?email=${encodeURIComponent(recipientEmail)}`;
 }
 
@@ -54,12 +56,12 @@ export function baseEmailLayout(innerHtml: string, opts: EmailLayoutOpts = {}) {
     : null;
   const hero = opts.heroImage || DEFAULT_HERO;
   const heroAlt = escapeHtml(opts.heroAlt || "ABF scholars graduating -- empowering IT students through scholarships, mentorship and career development");
-  const siteLogoFallback = (typeof process !== "undefined" && ((process.env as any).NEXT_PUBLIC_SITE_URL || "https://adeyinkabakare.org")) || "https://adeyinkabakare.org";
+  const siteLogoFallback = (typeof process !== "undefined" && (process.env.NEXT_PUBLIC_SITE_URL || "https://abfimpact.org")) || "https://abfimpact.org";
   const logoFallback = `${siteLogoFallback.replace(/\/$/, "")}/brand/logo.png`;
   const logoUrl = opts.logoUrl ? resolveLogoUrl(opts.logoUrl) : LOGO_URL;
   return `<!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${escapeHtml(opts.title || "Adeyinka Bakare Foundation")}</title></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>${escapeHtml(opts.title || "Adeyinka Bakare Fellowship")}</title></head>
 <body style="margin:0;padding:0;background:${BRAND.cream};font-family:Inter,Arial,sans-serif;">
   ${preheader}
   <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:${BRAND.cream};padding:24px 12px;background-image:url('${DEFAULT_BG}');background-size:cover;background-position:center;">
@@ -75,12 +77,12 @@ export function baseEmailLayout(innerHtml: string, opts: EmailLayoutOpts = {}) {
                 </td>
                 <td style="vertical-align:middle">
                   <div style="color:#fff;font-weight:900;letter-spacing:.14em;font-size:15px;line-height:1">ABF</div>
-                  <div style="color:${BRAND.gold};font-size:11px;letter-spacing:.08em;margin-top:2px">ADEYINKA BAKARE FOUNDATION</div>
+                  <div style="color:${BRAND.gold};font-size:11px;letter-spacing:.08em;margin-top:2px">ADEYINKA BAKARE FELLOWSHIP</div>
                 </td>
               </tr></table>
             </td>
             <td align="right" style="vertical-align:middle">
-              <a href="https://adeyinkabakare.org" style="color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-size:11px">Visit website →</a>
+              <a href="https://abfimpact.org" style="color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-size:11px">Visit website →</a>
             </td>
           </tr></table>
         </td></tr>
@@ -103,19 +105,19 @@ export function baseEmailLayout(innerHtml: string, opts: EmailLayoutOpts = {}) {
         <tr><td style="background:#fff9eb;padding:20px 28px;border-top:1px solid #f0e6d8">
           <table width="100%"><tr>
             <td style="color:${BRAND.muted};font-size:12px;line-height:1.6">
-              <strong style="color:${BRAND.ink}">Adeyinka Bakare Foundation</strong><br/>
+              <strong style="color:${BRAND.ink}">Adeyinka Bakare Fellowship</strong><br/>
               Empowering Futures, Transforming Lives<br/>
-              <a href="https://adeyinkabakare.org" style="color:${BRAND.maroon};text-decoration:none">adeyinkabakare.org</a> · <a href="mailto:hello@whisprwords.com" style="color:${BRAND.muted}">hello@whisprwords.com</a>
+              <a href="https://abfimpact.org" style="color:${BRAND.maroon};text-decoration:none">abfimpact.org</a> · <a href="mailto:join@abfimpact.org" style="color:${BRAND.muted}">join@abfimpact.org</a>
             </td>
             <td align="right" style="font-size:11px;color:#9a8a84">
               ${unsubscribeUrl ? `<a href="${escapeHtml(unsubscribeUrl)}" style="color:#9a8a84;text-decoration:underline">Unsubscribe</a><br/>` : ""}© ${new Date().getFullYear()} ABF
             </td>
           </tr></table>
-          <div style="margin-top:12px;text-align:center;color:#b8a99f;font-size:10px;letter-spacing:.06em">FOLLOW US · Instagram · X · LinkedIn · Facebook</div>
+         ${SOCIAL_LINKS_PLACEHOLDER}
         </td></tr>
       </table>
       <div style="max-width:640px;margin:14px auto 0;text-align:center;color:#9a8a84;font-size:11px;line-height:1.5">
-        You received this because you are connected to Adeyinka Bakare Foundation.<br/>If you didn't expect this, you can ignore this email.
+        You received this because you are connected to Adeyinka Bakare Fellowship.<br/>If you didn't expect this, you can ignore this email.
       </div>
     </td></tr>
   </table>

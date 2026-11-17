@@ -53,9 +53,9 @@ export async function findEventBySlug(slug: string) {
     .eq("slug", slug)
     .single();
 
-  if (error) throw error;
+  if (error && error.code !== "PGRST101" && error.code !== "PGRST116") throw error;
 
-  return data;
+  return data ?? null;
 }
 
 export async function createEvent(data: EventInsert) {

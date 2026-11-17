@@ -52,7 +52,7 @@ export default function MemberPage() {
         setSubmitStatus({
           type: "success",
           message:
-            "Welcome to the Adeyinka Bakare Foundation! Check your email for next steps and your membership guide.",
+            "Welcome to the Adeyinka Bakare Fellowship! Check your email for next steps and your membership guide.",
         });
         setFormData({
           full_name: "",

@@ -1,7 +1,6 @@
 import { createClient } from "../supabase/server";
-import type { Database, SocialLinkInsert, SocialLinkUpdate } from "../types/database.types";
+import type { SocialLinkInsert, SocialLinkUpdate } from "../types/database.types";
 
-type SocialLink = Database["public"]["Tables"]["social_links"]["Row"];
 
 export async function findAllSocialLinks() {
   const supabase = await createClient();
@@ -9,7 +8,7 @@ export async function findAllSocialLinks() {
   const { data, error } = await supabase
     .from("social_links")
     .select("*")
-    .order("sort_order", { ascending: true });
+    .order("display_order", { ascending: true });
 
   if (error) throw error;
 

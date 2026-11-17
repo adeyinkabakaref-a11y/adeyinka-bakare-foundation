@@ -1,5 +1,6 @@
 import { getTransporter, getFromAddress } from "./client";
 import { getSettings } from "../services/settings.service";
+import { getEmailSocialLinks, renderEmailSocialLinks, SOCIAL_LINKS_PLACEHOLDER } from "./social-links";
 
 export async function sendEmail(opts: {
   to: string;
@@ -24,11 +25,17 @@ export async function sendEmail(opts: {
     }
   }
 
-  const info = await transporter.sendMail({
+  const socialLinks = await getEmailSocialLinks();
+const html = opts.html.replace(
+SOCIAL_LINKS_PLACEHOLDER,
+renderEmailSocialLinks(socialLinks)
+);
+
+const info = await transporter.sendMail({
     from,
     to: opts.to,
     subject: opts.subject,
-    html: opts.html,
+    html,
     text: opts.text,
     replyTo: opts.replyTo || process.env.SMTP_REPLY_TO || undefined,
   });

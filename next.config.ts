@@ -1,43 +1,43 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  experimental: {
-    // This helps with path resolution
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "i.ibb.co",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "ibb.co",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "adeyinkabakare.org",
-        port: "",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "*.supabase.co",
-        port: "",
-        pathname: "/**",
-      },
-    ],
-  },
+ experimental: {
+ // This helps with path resolution
+ },
+ images: {
+ remotePatterns: [
+ {
+ protocol: "https",
+ hostname: "images.unsplash.com",
+ port: "",
+ pathname: "/**",
+ },
+ {
+ protocol: "https",
+ hostname: "i.ibb.co",
+ port: "",
+ pathname: "/**",
+ },
+ {
+ protocol: "https",
+ hostname: "ibb.co",
+ port: "",
+ pathname: "/**",
+ },
+ {
+ protocol: "https",
+ hostname: "abfimpact.org",
+ port: "",
+ pathname: "/**",
+ },
+ {
+ protocol: "https",
+ hostname: "*.supabase.co",
+ port: "",
+ pathname: "/**",
+ },
+ ],
+ },
 };
 
 export default nextConfig;

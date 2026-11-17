@@ -30,7 +30,7 @@ export async function verifySmtp() {
 }
 
 export function getFromAddress() {
-  const name = process.env.SMTP_FROM_NAME || "Adeyinka Bakare Foundation";
+  const name = process.env.SMTP_FROM_NAME || "Adeyinka Bakare Fellowship";
   const from = process.env.SMTP_FROM || process.env.SMTP_USER!;
   return { name, address: from };
 }

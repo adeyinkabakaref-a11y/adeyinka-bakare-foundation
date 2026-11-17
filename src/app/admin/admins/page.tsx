@@ -152,7 +152,7 @@ export default function AdminsPage() {
           <Input id="full_name" autoComplete="name" value={formData.full_name} onChange={(e)=>{ setFormData(prev=>({...prev, full_name:e.target.value})); clearError("full_name"); }} placeholder="Jane Doe" className={`h-11 ${errors.full_name?"border-destructive":""}`} />
         </FormField>
         <FormField label="Email" htmlFor="email" required error={errors.email} hint={editingAdmin?"Email cannot be changed.":"Invite link sent via email."}>
-          <Input id="email" type="email" autoComplete="email" value={formData.email} onChange={(e)=>{ setFormData(prev=>({...prev, email:e.target.value})); clearError("email"); }} placeholder="admin@adeyinkabakare.org" className={`h-11 ${errors.email?"border-destructive":""}`} disabled={!!editingAdmin} />
+          <Input id="email" type="email" autoComplete="email" value={formData.email} onChange={(e)=>{ setFormData(prev=>({...prev, email:e.target.value})); clearError("email"); }} placeholder="admin@abfimpact.org" className={`h-11 ${errors.email?"border-destructive":""}`} disabled={!!editingAdmin} />
         </FormField>
         <FormField label="Role" htmlFor="role">
           <Select value={formData.role} onValueChange={(v)=>setFormData(prev=>({...prev, role:v as AdminRole}))}>
