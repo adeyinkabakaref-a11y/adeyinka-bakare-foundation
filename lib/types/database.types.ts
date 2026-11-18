@@ -457,25 +457,22 @@ is_active?: boolean;
      id: string;
      platform: string;
      url: string;
-     display_order: number;
-     created_at: string;
-     updated_at: string;
+     is_active: boolean;
+     sort_order: number;
     };
     Insert: {
      id?: string;
      platform: string;
      url: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
+     is_active?: boolean;
+     sort_order?: number;
     };
     Update: {
      id?: string;
      platform?: string;
      url?: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
+     is_active?: boolean;
+     sort_order?: number;
     };
    };
    site_settings: {

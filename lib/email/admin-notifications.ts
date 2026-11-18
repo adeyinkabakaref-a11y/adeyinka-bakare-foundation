@@ -55,7 +55,7 @@ export function notifyAdmins(params: {
         return;
       }
 
-      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || "http://localhost:3000";
+      const baseUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.APP_URL || process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
       const { subject, html, text } = adminNotifyEmail({ ...params, baseUrl });
 
       // Send to all admins in parallel

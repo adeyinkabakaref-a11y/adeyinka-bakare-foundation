@@ -203,6 +203,10 @@
 }
 
 @layer utilities {
+ .font-display {
+ font-family: var(--font-display), Georgia, serif;
+ }
+
   @keyframes abf-fade-up {
     from {
       opacity: 0;
@@ -354,7 +358,10 @@
   }
 }
 
-/* Rich-content prose for the public news article body. */
+/* Rich-content prose for the public news article body.
+   Keep these rules in the components layer so Tailwind utilities authored by
+   the news editor (text-white, max-w-[25%], etc.) can win when intended. */
+@layer components {
 .abf-prose-body {
   font-size: 1.08rem;
   line-height: 1.8;
@@ -424,8 +431,42 @@
   color: #f4f1ec;
   padding: 1rem 1.25rem;
 }
+/* Buttons inserted by the news editor carry their own background. These
+   selectors also catch older stored HTML that used raw Tailwind classes, so
+   the label stays white instead of inheriting the maroon link colour. */
+.abf-prose-body a.abf-article-cta,
+.abf-prose-body a[class*="inline-flex"],
+.abf-prose-body a[class*="bg-linear"],
+.abf-prose-body a[class*="bg-maroon"] {
+ display: inline-flex;
+ align-items: center;
+ justify-content: center;
+ gap: 0.4rem;
+ border-radius: 0.625rem;
+ background-image: linear-gradient(90deg, #aa322b, #922821);
+ padding: 0.55rem 1rem;
+ color: #fff;
+ font-size: 0.875rem;
+ font-weight: 600;
+ line-height: 1.25;
+ text-decoration: none;
+ box-shadow: 0 6px 14px -8px rgba(59, 19, 20, 0.75);
+}
+.abf-prose-body a.abf-article-cta:hover,
+.abf-prose-body a[class*="inline-flex"]:hover,
+.abf-prose-body a[class*="bg-linear"]:hover,
+.abf-prose-body a[class*="bg-maroon"]:hover {
+ background-image: linear-gradient(90deg, #922821, #73201c);
+ color: #fff;
+ text-decoration: none;
+}
+.abf-prose-body a.abf-article-cta:focus-visible {
+ outline: 2px solid #f8c84d;
+ outline-offset: 3px;
+}
 @media (max-width: 640px) {
-  .abf-prose-body h1 { font-size: 1.6rem; }
-  .abf-prose-body h2 { font-size: 1.35rem; }
-  .abf-prose-body h3 { font-size: 1.18rem; }
+ .abf-prose-body h1 { font-size: 1.6rem; }
+ .abf-prose-body h2 { font-size: 1.35rem; }
+ .abf-prose-body h3 { font-size: 1.18rem; }
+}
 }

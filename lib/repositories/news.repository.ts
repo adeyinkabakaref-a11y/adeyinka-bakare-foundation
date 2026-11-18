@@ -1,7 +1,6 @@
 import { createClient } from "../supabase/server";
-import type { Database, NewsInsert, NewsUpdate } from "../types/database.types";
-
-type News = Database["public"]["Tables"]["news"]["Row"];
+import { createAdminClient } from "../supabase/admin";
+import type { NewsInsert, NewsUpdate } from "../types/database.types";
 
 export async function findAllNews() {
   const supabase = await createClient();
@@ -51,23 +50,24 @@ export async function findNewsBySlug(slug: string) {
     .from("news")
     .select("*, profiles(*)")
     .eq("slug", slug)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
 
   return data;
 }
 
-export async function createNews(data: NewsInsert) {
-  const supabase = await createClient();
+export async function createNews(newsData: NewsInsert) {
+  const supabase = createAdminClient();
 
   const { data: news, error } = await supabase
     .from("news")
-    .insert(data)
-    .select()
+    .insert(newsData)
+    .select("*")
     .single();
 
   if (error) throw error;
+  if (!news) throw new Error("News article was created but could not be returned");
 
   return news;
 }
@@ -79,8 +79,8 @@ export async function updateNews(id: string, data: NewsUpdate) {
     .from("news")
     .update(data)
     .eq("id", id)
-    .select()
-    .single();
+    .select("*")
+    .maybeSingle();
 
   if (error) throw error;
 

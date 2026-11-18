@@ -3,21 +3,39 @@
 import { useState } from "react";
 import { Check, Share2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface ShareButtonProps {
-  eventSlug: string;
-  eventTitle: string;
+  slug: string;
+  title: string;
+  path: "events" | "news";
+  label?: string;
+  className?: string;
+  variant?: ButtonProps["variant"];
 }
 
-export function ShareButton({ eventSlug, eventTitle }: ShareButtonProps) {
+export function ShareButton({
+  slug,
+  title,
+  path,
+  label,
+  className,
+  variant = "outline",
+}: ShareButtonProps) {
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+  const isNews = path === "news";
+  const defaultLabel = isNews ? "Share story" : "Share event";
 
   const handleShare = async () => {
-    const url = `${window.location.origin}/events/${eventSlug}`;
-    const shareData = { title: eventTitle, text: `Join me for ${eventTitle}`, url };
+    const url = `${window.location.origin}/${path}/${slug}`;
+    const shareData = {
+      title,
+      text: isNews ? `Read ${title}` : `Join me for ${title}`,
+      url,
+    };
 
     if (navigator.share) {
       try {
@@ -31,7 +49,12 @@ export function ShareButton({ eventSlug, eventTitle }: ShareButtonProps) {
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      toast({ title: "Link copied", description: "Share this event with anyone you like." });
+      toast({
+        title: "Link copied",
+        description: isNews
+          ? "Share this story with anyone you like."
+          : "Share this event with anyone you like.",
+      });
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
       toast({
@@ -43,9 +66,14 @@ export function ShareButton({ eventSlug, eventTitle }: ShareButtonProps) {
   };
 
   return (
-    <Button type="button" variant="outline" className="h-11 w-full" onClick={handleShare}>
+    <Button
+      type="button"
+      variant={variant}
+      className={cn("h-11 w-full", className)}
+      onClick={handleShare}
+    >
       {copied ? <Check className="size-4" /> : <Share2 className="size-4" />}
-      {copied ? "Link copied" : "Share event"}
+      {copied ? "Link copied" : label || defaultLabel}
     </Button>
   );
 }

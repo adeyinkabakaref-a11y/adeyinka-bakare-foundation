@@ -8,7 +8,7 @@ export async function findAllSocialLinks() {
   const { data, error } = await supabase
     .from("social_links")
     .select("*")
-    .order("display_order", { ascending: true });
+    .order("sort_order", { ascending: true });
 
   if (error) throw error;
 

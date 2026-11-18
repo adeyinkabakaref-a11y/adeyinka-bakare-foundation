@@ -32,19 +32,18 @@ async function getNews() {
 
 export default async function NewsPage() {
   const news = await getNews();
-
-  const featured = news.find((n: any) => n.featured) || news[0];
-  const rest = (featured ? news.filter((n: any) => n.id !== featured.id) : news) as any[];
+  const featured = news.find((item: any) => item.featured) || news[0];
+  const rest = (featured ? news.filter((item: any) => item.id !== featured.id) : news) as any[];
 
   return (
     <>
       <PageHero
-        eyebrow="Insights & Updates"
-        title="ABF in the Making"
-        description="Announcements, programme highlights, scholarship updates, and stories from the Adeyinka Bakare Fellowship."
+        eyebrow="Newsroom"
+        title="Stories from the fellowship"
+        description="Programme highlights, scholarship updates, and the moments shaping the Adeyinka Bakare Fellowship community."
       />
 
-      <Section>
+      <Section className="pt-10 md:pt-14">
         {news.length === 0 ? (
           <Reveal>
             <EmptyState
@@ -53,29 +52,37 @@ export default async function NewsPage() {
             />
           </Reveal>
         ) : (
-          <div className="space-y-14">
+          <div className="space-y-16 md:space-y-20">
             {featured && (
               <Reveal>
                 <NewsCard news={featured} variant="featured" />
               </Reveal>
             )}
+
             {rest.length > 0 && (
-              <>
-                <Reveal delay={0.1}>
-                  <SectionHeading
-                    eyebrow="More Stories"
-                    title="Latest Updates"
-                    description="Browse all our recent announcements and articles."
-                  />
+              <section aria-labelledby="latest-news-heading">
+                <Reveal>
+                  <div className="mb-8 flex flex-col gap-4 border-b border-maroon-100 pb-6 sm:flex-row sm:items-end sm:justify-between">
+                    <SectionHeading
+                      eyebrow="The latest"
+                      title="More from ABF"
+                      description="Announcements and stories from across our programmes."
+                      align="left"
+                      className="mb-0"
+                    />
+                    <p className="shrink-0 text-sm font-semibold text-muted-foreground">
+                      {rest.length} {rest.length === 1 ? "story" : "stories"}
+                    </p>
+                  </div>
                 </Reveal>
-                <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
                   {rest.map((item: any, index: number) => (
-                    <Reveal key={item.id} delay={index * 0.07}>
+                    <Reveal key={item.id} delay={index * 0.06}>
                       <NewsCard news={item} index={index} />
                     </Reveal>
                   ))}
                 </div>
-              </>
+              </section>
             )}
           </div>
         )}
