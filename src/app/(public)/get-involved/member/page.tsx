@@ -231,6 +231,7 @@ export default function MemberPage() {
                   resource="members"
                   maxSize={5 * 1024 * 1024}
                   accept="image/*"
+                  usePublicEndpoint={true}
                 />
 
                 <div className="flex flex-col-reverse gap-3 border-t border-border pt-5 sm:flex-row sm:justify-end">

@@ -52,6 +52,8 @@ interface ImageUploadProps {
   accept?: string;
   /** When true, hides the external-URL input. */
   hideUrlInput?: boolean;
+  /** When true, uses the public upload endpoint instead of admin. */
+  usePublicEndpoint?: boolean;
   className?: string;
 }
 
@@ -110,6 +112,7 @@ export function ImageUpload({
   maxSize = 50 * 1024 * 1024,
   accept = "image/*,video/*,audio/*,application/pdf",
   hideUrlInput = false,
+  usePublicEndpoint = false,
   className,
 }: ImageUploadProps) {
   const { toast } = useToast();
@@ -167,7 +170,8 @@ export function ImageUpload({
       fd.append("resource", resource);
       if (resolvedFolder) fd.append("folder", resolvedFolder);
 
-      const res = await fetch("/api/admin/media/upload-url", {
+      const uploadEndpoint = usePublicEndpoint ? "/api/public/media/upload" : "/api/admin/media/upload-url";
+      const res = await fetch(uploadEndpoint, {
         method: "POST",
         body: fd,
       });
