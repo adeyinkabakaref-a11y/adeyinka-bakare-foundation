@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/admin/page-header";
 import { useToast } from "@/hooks/use-toast";
-import { createClient } from "@/lib/supabase/server";
 import type { Database } from "@/lib/types/database.types";
 
 type FormResponse = Database["public"]["Tables"]["form_responses"]["Row"];
@@ -30,17 +29,10 @@ export default function ResponsesPage() {
   const load = async () => {
     try {
       setLoading(true);
-      const supabase = await createClient();
-      const [eventsRes, formsRes, responsesRes] = await Promise.all([
-        supabase.from("events").select("*").order("title", { ascending: true }),
-        supabase.from("event_forms").select("*").order("title", { ascending: true }),
-        supabase.from("form_responses").select("*").order("submitted_at", { ascending: false }).limit(500),
-      ]);
-      setData({
-        events: eventsRes.data || [],
-        forms: formsRes.data || [],
-        responses: responsesRes.data || [],
-      });
+      const response = await fetch("/api/admin/responses");
+ const result = await response.json();
+ if (!result.success) throw new Error(result.error || "Failed to load data");
+ setData(result.data);
     } catch (err) {
       console.error("Load error:", err);
       toast({ variant: "destructive", title: "Error", description: "Failed to load data" });

@@ -1,13 +1,13 @@
 "use client";
 
-import { CheckCircle2, Calendar, MessageCircle } from "lucide-react";
+import { CheckCircle2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
-export default function ApplySuccessPage() {
+function SuccessContent() {
   const searchParams = useSearchParams();
   const [eventTitle, setEventTitle] = useState(searchParams.get("event") || "your event");
 
@@ -52,5 +52,13 @@ export default function ApplySuccessPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function ApplySuccessPage() {
+  return (
+    <Suspense fallback={null}>
+      <SuccessContent />
+    </Suspense>
   );
 }
