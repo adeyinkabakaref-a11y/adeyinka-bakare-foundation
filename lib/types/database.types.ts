@@ -219,88 +219,85 @@ export interface Database {
      updated_at?: string;
     };
    };
-   testimonials: {
-    Row: {
-     id: string;
-     name: string;
-     role: string | null;
-     message: string;
-     photo: string | null;
-     status: "draft" | "published" | "archived";
-     featured: boolean;
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     name: string;
-     role?: string | null;
-     message: string;
-     photo?: string | null;
-     status?: "draft" | "published" | "archived";
-     featured?: boolean;
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     name?: string;
-     role?: string | null;
-     message?: string;
-     photo?: string | null;
-     status?: "draft" | "published" | "archived";
-     featured?: boolean;
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
-   beneficiaries: {
-    Row: {
-     id: string;
-     full_name: string;
-     photo: string | null;
-     department: string | null;
-     level: string | null;
-     session: string | null;
-     scholarship_type: string | null;
-     amount: string | null;
-     story: string | null;
-     status: "active" | "inactive" | "graduated";
-     featured: boolean;
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     full_name: string;
-     photo?: string | null;
-     department?: string | null;
-     level?: string | null;
-     session?: string | null;
-     scholarship_type?: string | null;
-     amount?: string | null;
-     story?: string | null;
-     status?: "active" | "inactive" | "graduated";
-     featured?: boolean;
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     full_name?: string;
-     photo?: string | null;
-     department?: string | null;
-     level?: string | null;
-     session?: string | null;
-     scholarship_type?: string | null;
-     amount?: string | null;
-     story?: string | null;
-     status?: "active" | "inactive" | "graduated";
-     featured?: boolean;
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
+testimonials: {
+Row: {
+id: string;
+beneficiary_id: string | null;
+content: string;
+media_url: string | null;
+media_type: "image" | "audio" | "video" | "document" | "other" | null;
+featured: boolean;
+status: "draft" | "published" | "archived";
+created_at: string;
+updated_at: string;
+};
+Insert: {
+id?: string;
+beneficiary_id?: string | null;
+content: string;
+media_url?: string | null;
+media_type?: "image" | "audio" | "video" | "document" | "other" | null;
+featured?: boolean;
+status?: "draft" | "published" | "archived";
+created_at?: string;
+updated_at?: string;
+};
+Update: {
+id?: string;
+beneficiary_id?: string | null;
+content?: string;
+media_url?: string | null;
+media_type?: "image" | "audio" | "video" | "document" | "other" | null;
+featured?: boolean;
+status?: "draft" | "published" | "archived";
+created_at?: string;
+updated_at?: string;
+};
+};
+beneficiaries: {
+Row: {
+id: string;
+full_name: string;
+photo: string | null;
+department: string | null;
+level: string | null;
+session: string | null;
+programme: string | null;
+bio: string | null;
+status: "draft" | "published" | "archived";
+featured: boolean;
+created_at: string;
+updated_at: string;
+};
+Insert: {
+id?: string;
+full_name: string;
+photo?: string | null;
+department?: string | null;
+level?: string | null;
+session?: string | null;
+programme?: string | null;
+bio?: string | null;
+status?: "draft" | "published" | "archived";
+featured?: boolean;
+created_at?: string;
+updated_at?: string;
+};
+Update: {
+id?: string;
+full_name?: string;
+photo?: string | null;
+department?: string | null;
+level?: string | null;
+session?: string | null;
+programme?: string | null;
+bio?: string | null;
+status?: "draft" | "published" | "archived";
+featured?: boolean;
+created_at?: string;
+updated_at?: string;
+};
+};
    programmes: {
     Row: {
      id: string;
@@ -342,131 +339,119 @@ export interface Database {
      updated_at?: string;
     };
    };
-   contents: {
-    Row: {
-     id: string;
-     title: string;
-     slug: string;
-     content: string;
-     image: string | null;
-     status: "draft" | "published" | "archived";
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     title: string;
-     slug: string;
-     content: string;
-     image?: string | null;
-     status?: "draft" | "published" | "archived";
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     title?: string;
-     slug?: string;
-     content?: string;
-     image?: string | null;
-     status?: "draft" | "published" | "archived";
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
-   media: {
-    Row: {
-     id: string;
-     title: string;
-     slug: string;
-     file_url: string;
-     thumbnail_url: string | null;
-     media_type: "image" | "video" | "document";
-     alt_text: string | null;
-     status: "draft" | "published" | "archived";
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     title: string;
-     slug: string;
-     file_url: string;
-     thumbnail_url?: string | null;
-     media_type?: "image" | "video" | "document";
-     alt_text?: string | null;
-     status?: "draft" | "published" | "archived";
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     title?: string;
-     slug?: string;
-     file_url?: string;
-     thumbnail_url?: string | null;
-     media_type?: "image" | "video" | "document";
-     alt_text?: string | null;
-     status?: "draft" | "published" | "archived";
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
-   footer_sections: {
-    Row: {
-     id: string;
-     title: string;
-     content: string;
-     display_order: number;
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     title: string;
-     content: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     title?: string;
-     content?: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
-   footer_links: {
-    Row: {
-     id: string;
-     footer_section_id: string;
-     label: string;
-     url: string;
-     display_order: number;
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     footer_section_id: string;
-     label: string;
-     url: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     footer_section_id?: string;
-     label?: string;
-     url?: string;
-     display_order?: number;
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
+contents: {
+Row: {
+id: string;
+key: string;
+title: string | null;
+content: string | null;
+image: string | null;
+status: "draft" | "published" | "archived";
+updated_by: string | null;
+created_at: string;
+updated_at: string;
+};
+Insert: {
+id?: string;
+key: string;
+title?: string | null;
+content?: string | null;
+image?: string | null;
+status?: "draft" | "published" | "archived";
+updated_by?: string | null;
+created_at?: string;
+updated_at?: string;
+};
+Update: {
+id?: string;
+key?: string;
+title?: string | null;
+content?: string | null;
+image?: string | null;
+status?: "draft" | "published" | "archived";
+updated_by?: string | null;
+created_at?: string;
+updated_at?: string;
+};
+};
+media: {
+Row: {
+id: string;
+filename: string;
+storage_path: string;
+type: "image" | "audio" | "video" | "document" | "other";
+mime_type: string | null;
+size_bytes: number | null;
+uploaded_by: string | null;
+created_at: string;
+};
+Insert: {
+id?: string;
+filename: string;
+storage_path: string;
+type: "image" | "audio" | "video" | "document" | "other";
+mime_type?: string | null;
+size_bytes?: number | null;
+uploaded_by?: string | null;
+created_at?: string;
+};
+Update: {
+id?: string;
+filename?: string;
+storage_path?: string;
+type?: "image" | "audio" | "video" | "document" | "other";
+mime_type?: string | null;
+size_bytes?: number | null;
+uploaded_by?: string | null;
+created_at?: string;
+};
+};
+footer_sections: {
+Row: {
+id: string;
+title: string;
+sort_order: number;
+is_active: boolean;
+};
+Insert: {
+id?: string;
+title: string;
+sort_order?: number;
+is_active?: boolean;
+};
+Update: {
+id?: string;
+title?: string;
+sort_order?: number;
+is_active?: boolean;
+};
+};
+footer_links: {
+Row: {
+id: string;
+section_id: string;
+label: string;
+url: string;
+sort_order: number;
+is_active: boolean;
+};
+Insert: {
+id?: string;
+section_id: string;
+label: string;
+url: string;
+sort_order?: number;
+is_active?: boolean;
+};
+Update: {
+id?: string;
+section_id?: string;
+label?: string;
+url?: string;
+sort_order?: number;
+is_active?: boolean;
+};
+};
    social_links: {
     Row: {
      id: string;
@@ -751,47 +736,41 @@ export interface Database {
      updated_at?: string;
     };
    };
-   admin_mfa: {
-    Row: {
-     id: string;
-     admin_id: string;
-     totp_secret: string | null;
-     totp_enabled: boolean;
-     email_verified: boolean;
-     email_mfa_enabled: boolean;
-     email_mfa_code: string | null;
-     email_mfa_expires_at: string | null;
-     backup_codes: string[] | null;
-     created_at: string;
-     updated_at: string;
-    };
-    Insert: {
-     id?: string;
-     admin_id: string;
-     totp_secret?: string | null;
-     totp_enabled?: boolean;
-     email_verified?: boolean;
-     email_mfa_enabled?: boolean;
-     email_mfa_code?: string | null;
-     email_mfa_expires_at?: string | null;
-     backup_codes?: string[] | null;
-     created_at?: string;
-     updated_at?: string;
-    };
-    Update: {
-     id?: string;
-     admin_id?: string;
-     totp_secret?: string | null;
-     totp_enabled?: boolean;
-     email_verified?: boolean;
-     email_mfa_enabled?: boolean;
-     email_mfa_code?: string | null;
-     email_mfa_expires_at?: string | null;
-     backup_codes?: string[] | null;
-     created_at?: string;
-     updated_at?: string;
-    };
-   };
+admin_mfa: {
+Row: {
+id: string;
+admin_id: string;
+totp_enabled: boolean;
+encrypted_totp_secret: string | null;
+email_otp_enabled: boolean;
+passkey_enabled: boolean;
+mfa_required: boolean;
+created_at: string;
+updated_at: string;
+};
+Insert: {
+id?: string;
+admin_id: string;
+totp_enabled?: boolean;
+encrypted_totp_secret?: string | null;
+email_otp_enabled?: boolean;
+passkey_enabled?: boolean;
+mfa_required?: boolean;
+created_at?: string;
+updated_at?: string;
+};
+Update: {
+id?: string;
+admin_id?: string;
+totp_enabled?: boolean;
+encrypted_totp_secret?: string | null;
+email_otp_enabled?: boolean;
+passkey_enabled?: boolean;
+mfa_required?: boolean;
+created_at?: string;
+updated_at?: string;
+};
+};
    admin_passkeys: {
     Row: {
      id: string;

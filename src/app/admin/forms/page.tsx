@@ -11,9 +11,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PageHeader } from "@/components/admin/page-header";
 import { useToast } from "@/hooks/use-toast";
-import { getEventForms, createForm } from "@/lib/services/forms.service";
-import { createClient } from "@/lib/supabase/server";
-import { countFormResponses } from "@/lib/services/responses.service";
 
 export default function FormsPage() {
   const { toast } = useToast();
@@ -31,19 +28,12 @@ export default function FormsPage() {
   const load = async () => {
   try {
     setLoading(true);
-    const supabase = await createClient();
-    const [{ data: evts }, fms] = await Promise.all([
-      supabase.from("events").select("*").order("title", { ascending: true }),
-      getEventForms("placeholder"),
-    ]);
-
-    setEvents(evts || []);
-    setForms(fms || []);
-
-    for (const f of (fms || [])) {
-      const count = await countFormResponses(f.id);
-      setCounts((prev) => ({ ...prev, [f.id]: count }));
-    }
+ const response = await fetch("/api/admin/forms");
+ const result = await response.json();
+ if (!result.success) throw new Error(result.error || "Failed to load data");
+ setEvents(result.data.events);
+ setForms(result.data.forms);
+ setCounts(result.data.counts);
   } catch (err) {
     console.error("Load error:", err);
     toast({ variant: "destructive", title: "Error", description: "Failed to load data" });
@@ -58,7 +48,13 @@ const handleCreate = async () => {
       return;
     }
     try {
-      await createForm({ ...createData });
+ const response = await fetch("/api/admin/forms", {
+   method: "POST",
+   headers: { "Content-Type": "application/json" },
+   body: JSON.stringify(createData),
+ });
+ const result = await response.json();
+ if (!result.success) throw new Error(result.error || "Failed to create form");
       toast({ title: "Success", description: "Form created successfully" });
       setShowCreate(false);
       setCreateData({ event_id: "", title: "", description: "", status: "active" });

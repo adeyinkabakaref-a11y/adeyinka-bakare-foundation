@@ -39,7 +39,7 @@ export default function FormFieldsPage() {
 
   const [formData, setFormData] = useState({
     label: "",
-    field_type: "text" as const,
+    field_type: "text" as FormField["field_type"],
     required: false,
     placeholder: "",
     options: [] as { value: string; label: string }[],

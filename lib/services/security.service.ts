@@ -119,7 +119,7 @@ export async function registerPasskey(userId: string, credential: any, deviceNam
   const passkeyData: AdminPasskeyInsert = {
     admin_id: userId,
     credential_id: credential.id,
-    public_key: Buffer.from(credential.response.publicKey),
+    public_key: Buffer.from(credential.response.publicKey).toString("base64"),
     counter: 0,
     device_name: deviceName || "Unknown Device",
   };
