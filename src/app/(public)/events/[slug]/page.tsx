@@ -25,6 +25,7 @@ import { CTABanner } from "@/components/public/cta-banner";
 import { EventCard } from "@/components/public/event-card";
 import { ApplyButton } from "@/components/public/apply-button";
 import { ShareButton } from "@/components/public/share-button";
+import { FullMediaFigure } from "@/components/public/full-media-figure";
 import { getAllEvents as fetchAllEvents, getEventBySlug } from "@/lib/services/events.service";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -192,7 +193,19 @@ export default async function EventDetailPage({
         </div>
       </section>
 
-      <div className="mx-auto mt-6 max-w-6xl px-4 pb-4 sm:mt-8 sm:px-6 lg:px-8">
+      {event.image && (
+ <div className="mx-auto mt-6 max-w-6xl px-4 sm:mt-8 sm:px-6 lg:px-8">
+  <Reveal>
+   <FullMediaFigure
+    src={event.image}
+    alt={`${event.title} event photograph`}
+    priority
+   />
+  </Reveal>
+ </div>
+)}
+
+ <div className="mx-auto mt-6 max-w-6xl px-4 pb-4 sm:mt-8 sm:px-6 lg:px-8">
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-8">
           {/* Registration card */}
           <aside
@@ -239,7 +252,7 @@ export default async function EventDetailPage({
                   <CalendarPlus className="size-4" /> Add to calendar
                 </a>
               </Button>
-              <ShareButton eventSlug={event.slug} eventTitle={event.title} />
+              <ShareButton slug={event.slug} title={event.title} path="events" />
 <Button asChild variant="ghost" className="h-10 w-full">
                 <a href="#details">
                   Read the details <ArrowRight className="size-4" />

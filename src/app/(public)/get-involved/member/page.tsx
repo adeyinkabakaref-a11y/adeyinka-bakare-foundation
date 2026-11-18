@@ -131,7 +131,7 @@ export default function MemberPage() {
                   role="alert"
                   className={`mb-6 rounded-xl border p-4 text-sm ${
                     submitStatus.type === "success"
-                      ? "border-success bg-success-soft text-success-foreground"
+                      ? "border-success bg-success-soft text-primary"
                       : "border-destructive bg-destructive/10 text-destructive"
                   }`}
                 >

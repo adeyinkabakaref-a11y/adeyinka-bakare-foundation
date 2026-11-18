@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { requirePermission } from "@/lib/auth/require-permission";
 import { authErrorResponse } from "@/lib/auth/auth-error";
@@ -65,8 +66,14 @@ export async function PATCH(
   } catch (error) {
     const denied = authErrorResponse(error);
     if (denied) return denied;
-    console.error("Update programme error:", error);
-    return NextResponse.json(
+ if (error instanceof z.ZodError) {
+ return NextResponse.json(
+  { success: false, error: "Invalid programme data", details: error.issues.map((issue) => issue.message) },
+  { status: 422 }
+ );
+ }
+ console.error("Update programme error:", error);
+ return NextResponse.json(
       { success: false, error: "Failed to update programme" },
       { status: 500 }
     );

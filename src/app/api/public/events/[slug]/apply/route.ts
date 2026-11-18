@@ -6,6 +6,7 @@ import { getFieldsByForm } from "@/lib/repositories/forms.repository";
 import { createResponse } from "@/lib/services/responses.service";
 import { sendEventApplicationEmail } from "@/lib/email/templates";
 import { sendEmail } from "@/lib/email/send";
+import { notifyAdmins } from "@/lib/email/admin-notifications";
 
 export async function GET(
   request: NextRequest,
@@ -105,7 +106,20 @@ export async function POST(
       user_agent: userAgent,
     });
 
-    // Send thank you email
+ const answerSummary = Object.entries(responses)
+ .map(([label, value]) => `${label}: ${Array.isArray(value) ? value.join(", ") : String(value ?? "")}`)
+ .join(" | ")
+ .slice(0, 1000);
+
+ // Let every active admin and super admin know a response just came in.
+ notifyAdmins({
+  title: `New registration: ${event.title}`,
+  message: `${response.full_name} (${response.email}) registered for ${event.title}.${answerSummary ? ` Responses: ${answerSummary}` : ""}`,
+  ctaUrl: `/admin/events/${event.id}/responses`,
+  ctaLabel: "View Responses",
+ });
+
+ // Send thank you email
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     const fromName = event.email_from_name || "Glory Adeniran";
     try {

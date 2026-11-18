@@ -264,8 +264,8 @@ export function NewsForm({ mode = "create", initial }: { mode?: "create" | "edit
   // Link insertion
   const handleLinkInsert = () => {
     const html = linkText
-      ? `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="text-primary underline hover:text-maroon-600">${linkText}</a>`
-      : `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="text-primary underline hover:text-maroon-600">${linkUrl}</a>`;
+      ? `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="abf-article-link text-primary underline hover:text-maroon-600">${linkText}</a>`
+      : `<a href="${linkUrl}" target="_blank" rel="noopener noreferrer" class="abf-article-link text-primary underline hover:text-maroon-600">${linkUrl}</a>`;
 
     insertAtCursor(html);
     setShowLinkDialog(false);
@@ -275,7 +275,7 @@ export function NewsForm({ mode = "create", initial }: { mode?: "create" | "edit
 
   // CTA button insertion
   const handleCtaInsert = () => {
-    const html = `<a href="${ctaUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md bg-linear-to-r from-maroon-500 to-maroon-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-maroon-600 hover:to-maroon-700">${ctaText}</a>`;
+    const html = `<a href="${ctaUrl}" target="_blank" rel="noopener noreferrer" class="abf-article-cta inline-flex items-center justify-center rounded-md bg-linear-to-r from-maroon-500 to-maroon-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:from-maroon-600 hover:to-maroon-700 hover:text-white no-underline">${ctaText}</a>`;
     insertAtCursor(html);
     setShowCtaDialog(false);
     setCtaText("");
@@ -310,7 +310,6 @@ export function NewsForm({ mode = "create", initial }: { mode?: "create" | "edit
     try {
       const payload: any = {
         title: formData.title.trim(),
-        slug: formData.slug.trim(),
         content: formData.content,
         excerpt: formData.excerpt || null,
         image: formData.coverImage || null,

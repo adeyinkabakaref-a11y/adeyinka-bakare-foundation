@@ -117,26 +117,18 @@ export default function NewMemberPage() {
     try {
       const formDataUpload = new FormData();
       formDataUpload.append("file", file);
+      formDataUpload.append("type", "image");
+      formDataUpload.append("resource", "members");
 
       const res = await fetch("/api/admin/media/upload-url", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ filename: file.name, type: "image" }),
+        body: formDataUpload,
       });
       const data = await res.json();
 
       if (!data.success) throw new Error(data.error);
 
-      // Upload to Supabase Storage
-      const uploadRes = await fetch(data.data.uploadUrl, {
-        method: "PUT",
-        body: file,
-        headers: { "Content-Type": file.type },
-      });
-
-      if (!uploadRes.ok) throw new Error("Failed to upload image");
-
-      setFormData(prev => ({ ...prev, photo: data.data.storagePath }));
+      setFormData(prev => ({ ...prev, photo: data.data.url }));
       setImagePreview(URL.createObjectURL(file));
       toast({ title: "Success", description: "Image uploaded successfully" });
     } catch (error: any) {

@@ -46,7 +46,19 @@ export async function removeAdmin(id: string, actorId: string) {
   // Delete auth user using service role client
   const supabaseAdmin = createAdminClient();
   
-  const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id);
+ // The passkey delete trigger writes a notification for the admin. Remove
+ // passkeys while the profile still exists, before the auth-user cascade
+ // deletes it.
+ const { error: passkeyError } = await supabaseAdmin
+ .from("admin_passkeys")
+ .delete()
+ .eq("admin_id", id);
+
+ if (passkeyError) {
+  throw new Error(`Failed to remove admin passkeys: ${passkeyError.message}`);
+ }
+
+ const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(id);
 
   if (authError) {
     throw new Error(`Failed to delete auth user: ${authError.message}`);
