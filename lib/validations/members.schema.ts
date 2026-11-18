@@ -7,7 +7,7 @@ export const memberSchema = z.object({
   department: z.string().optional().nullable(),
   level: z.string().optional().nullable(),
   session: z.string().optional().nullable(),
-  photo: z.string().url().optional().nullable(),
+  photo: z.string().optional().nullable(),
   status: z.enum(["active", "inactive", "graduated", "archived"]).optional(),
   joined_at: z.string().optional().nullable(),
 });
