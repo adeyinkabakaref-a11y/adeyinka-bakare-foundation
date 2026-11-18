@@ -70,8 +70,24 @@ export function NewsForm({ mode = "create", initial }: { mode?: "create" | "edit
     authorName: "",
     coverImage: "",
     schemaType: "Article",
-    ...initial,
   });
+
+  // Update form data when initial data changes (for edit mode)
+  useEffect(() => {
+    if (initial && Object.keys(initial).length > 0) {
+      setFormData(prev => ({
+        ...prev,
+        ...initial,
+      }));
+    }
+  }, [initial]);
+
+  // Update content editor innerHTML when formData.content changes
+  useEffect(() => {
+    if (contentRef.current && formData.content) {
+      contentRef.current.innerHTML = formData.content;
+    }
+  }, [formData.content]);
 
   const [newTag, setNewTag] = useState("");
   const [isLoading, setIsLoading] = useState(false);

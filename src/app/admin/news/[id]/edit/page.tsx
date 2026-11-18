@@ -18,15 +18,15 @@ export default function EditNewsPage() {
 
         if (result.success) {
           setInitialData({
-            ...result.data,
             id: result.data.id,
-            title: result.data.title,
-            slug: result.data.slug,
-            content: result.data.content,
+            title: result.data.title || "",
+            slug: result.data.slug || "",
+            content: result.data.content || "",
             excerpt: result.data.excerpt || "",
-            status: result.data.status,
+            status: result.data.status || "draft",
             featured: result.data.featured || false,
             coverImage: result.data.image || "",
+            tags: result.data.tags || [],
           });
         } else {
           throw new Error(result.error || "Failed to load news article");
