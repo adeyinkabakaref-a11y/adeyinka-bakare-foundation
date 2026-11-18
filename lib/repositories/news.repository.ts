@@ -36,7 +36,7 @@ export async function findNewsById(id: string) {
     .from("news")
     .select("*, profiles(*)")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
 
