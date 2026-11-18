@@ -30,12 +30,12 @@ export async function findMemberById(id: string) {
   return data;
 }
 
-export async function createMember(data: MemberInsert) {
+export async function createMember(memberData: MemberInsert) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("members")
-    .insert(data)
+    .insert(memberData)
     .select("*");
 
   if (error) throw error;
@@ -43,12 +43,12 @@ export async function createMember(data: MemberInsert) {
   return data?.[0] || null;
 }
 
-export async function updateMember(id: string, data: MemberUpdate) {
+export async function updateMember(id: string, memberData: MemberUpdate) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("members")
-    .update(data)
+    .update(memberData)
     .eq("id", id)
     .select("*")
     .maybeSingle();
