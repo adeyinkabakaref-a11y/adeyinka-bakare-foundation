@@ -33,30 +33,29 @@ export async function findMemberById(id: string) {
 export async function createMember(data: MemberInsert) {
   const supabase = await createClient();
 
-  const { data: member, error } = await supabase
+  const { data, error } = await supabase
     .from("members")
     .insert(data)
-    .select()
-    .single();
+    .select("*");
 
   if (error) throw error;
 
-  return member;
+  return data?.[0] || null;
 }
 
 export async function updateMember(id: string, data: MemberUpdate) {
   const supabase = await createClient();
 
-  const { data: member, error } = await supabase
+  const { data, error } = await supabase
     .from("members")
     .update(data)
     .eq("id", id)
-    .select()
-    .single();
+    .select("*")
+    .maybeSingle();
 
   if (error) throw error;
 
-  return member;
+  return data;
 }
 
 export async function deleteMember(id: string) {
