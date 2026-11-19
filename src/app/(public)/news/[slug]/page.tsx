@@ -6,10 +6,14 @@ import { format } from "date-fns";
 import { Reveal } from "@/components/public/reveal";
 import { Section, SectionHeading } from "@/components/public/section";
 import { CTABanner } from "@/components/public/cta-banner";
-import { NewsCard } from "@/components/public/news-card";
+import { NewsCard, type NewsItem } from "@/components/public/news-card";
 import { FullMediaFigure } from "@/components/public/full-media-figure";
 import { ShareButton } from "@/components/public/share-button";
 import { Button } from "@/components/ui/button";
+
+interface NewsArticle extends NewsItem {
+ content?: string | null;
+}
 
 export async function generateMetadata({
   params,
@@ -62,9 +66,9 @@ async function getArticle(slug: string) {
       cache: "no-store",
     });
     if (!response.ok) return null;
-    const data = await response.json();
-    if (!data.success) return null;
-    return data.data as any;
+    const data = (await response.json()) as { success?: boolean; data?: NewsArticle | null };
+    if (!data.success || !data.data) return null;
+    return data.data;
   } catch (error) {
     console.error("Error fetching news article:", error);
     return null;
@@ -77,8 +81,8 @@ async function getAllNews() {
       cache: "no-store",
     });
     if (!response.ok) return [];
-    const data = await response.json();
-    return data.success ? data.data : [];
+    const data = (await response.json()) as { success?: boolean; data?: NewsItem[] };
+    return data.success && Array.isArray(data.data) ? data.data : [];
   } catch {
     return [];
   }
@@ -124,7 +128,7 @@ export default async function NewsArticlePage({
   }
 
   const allNews = await getAllNews();
-  const related = allNews.filter((item: any) => item.slug !== slug).slice(0, 3);
+  const related = allNews.filter((item) => item.slug !== slug).slice(0, 3);
   const dateStr = article.published_at || article.created_at;
   const minutes = readingTimeMinutes(article.content || "");
   const author = article.profiles?.full_name || "Adeyinka Bakare Fellowship";
@@ -276,7 +280,7 @@ export default async function NewsArticlePage({
             />
           </Reveal>
           <div className="grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {related.map((item: any, index: number) => (
+            {related.map((item, index) => (
               <Reveal key={item.id} delay={index * 0.08}>
                 <NewsCard news={item} index={index} />
               </Reveal>

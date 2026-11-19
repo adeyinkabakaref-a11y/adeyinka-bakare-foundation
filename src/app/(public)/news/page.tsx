@@ -4,7 +4,7 @@ import { PageHero } from "@/components/public/page-hero";
 import { Reveal } from "@/components/public/reveal";
 import { Section, SectionHeading } from "@/components/public/section";
 import { CTABanner } from "@/components/public/cta-banner";
-import { NewsCard } from "@/components/public/news-card";
+import { NewsCard, type NewsItem } from "@/components/public/news-card";
 import { EmptyState } from "@/components/admin/empty-state";
 
 export const metadata: Metadata = {
@@ -22,8 +22,8 @@ async function getNews() {
       { cache: "no-store" }
     );
     if (!response.ok) return [];
-    const data = await response.json();
-    return data.success ? data.data : [];
+    const data = (await response.json()) as { success?: boolean; data?: NewsItem[] };
+    return data.success && Array.isArray(data.data) ? data.data : [];
   } catch (error) {
     console.error("Error fetching news:", error);
     return [];
@@ -32,8 +32,8 @@ async function getNews() {
 
 export default async function NewsPage() {
   const news = await getNews();
-  const featured = news.find((item: any) => item.featured) || news[0];
-  const rest = (featured ? news.filter((item: any) => item.id !== featured.id) : news) as any[];
+  const featured = news.find((item) => item.featured) || news[0];
+  const rest = (featured ? news.filter((item) => item.id !== featured.id) : news);
 
   return (
     <>
@@ -76,7 +76,7 @@ export default async function NewsPage() {
                   </div>
                 </Reveal>
                 <div className="grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
-                  {rest.map((item: any, index: number) => (
+                  {rest.map((item, index) => (
                     <Reveal key={item.id} delay={index * 0.06}>
                       <NewsCard news={item} index={index} />
                     </Reveal>
