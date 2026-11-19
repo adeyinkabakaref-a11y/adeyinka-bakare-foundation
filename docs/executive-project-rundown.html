@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ABF Website — Executive Project Rundown &amp; Handover</title>
+<style>
+  :root {
+    --maroon-900: #3b1314;
+    --maroon-800: #551a18;
+    --maroon-700: #73201c;
+    --maroon-600: #922821;
+    --maroon-500: #aa322b;
+    --maroon-100: #f6e3dd;
+    --maroon-50: #fbf4f1;
+    --gold-500: #d9960d;
+    --gold-400: #efb11f;
+    --gold-200: #ffe08a;
+    --gold-50: #fff9eb;
+    --cream: #fffdf8;
+    --sand: #f8f2e8;
+    --ink: #2d1816;
+  }
+  html, body { margin: 0; padding: 0; background: var(--sand); }
+  body {
+    font-family: "Plus Jakarta Sans", "Segoe UI", Arial, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .display, h1, h2, h3 { font-family: "Libre Baskerville", Georgia, serif; }
+  a { color: var(--maroon-600); }
+  .wrap { width: 100%; max-width: 720px; margin: 0 auto; }
+  .fluid { width: 100%; }
+  .card { background: #ffffff; border: 1px solid #ecdfd2; border-radius: 16px; }
+  .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--maroon-600);
+  }
+  .gold-rule { height: 3px; background: linear-gradient(90deg, var(--gold-400), var(--gold-200), transparent); border-radius: 3px; }
+  .pill {
+    display: inline-block; padding: 6px 13px; border-radius: 999px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+    background: var(--maroon-50); color: var(--maroon-700); border: 1px solid var(--maroon-100);
+  }
+  .pill-gold { background: var(--gold-50); color: #6d4a06; border-color: var(--gold-200); }
+  .section-num {
+    display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center;
+    border-radius: 10px; background: var(--maroon-600); color: #ffffff;
+    font: 700 13px/1 "Libre Baskerville", Georgia, serif;
+  }
+  .btn {
+    display: inline-block; padding: 13px 22px; border-radius: 8px;
+    background: linear-gradient(135deg, var(--maroon-500), var(--maroon-700));
+    color: #ffffff !important; font-weight: 700; font-size: 14px; text-decoration: none;
+    box-shadow: 0 6px 18px rgba(85, 26, 24, 0.2);
+  }
+  .btn-ghost {
+    background: #ffffff; color: var(--maroon-700) !important;
+    border: 1px solid var(--maroon-100); box-shadow: none;
+  }
+  pre, code { font-family: "SFMono-Regular", Consolas, monospace; }
+  .code {
+    background: var(--maroon-900); color: #ffeccf; border-radius: 10px;
+    padding: 16px 18px; font-size: 12px; line-height: 1.7; overflow-x: auto;
+  }
+  .lift { transition: transform .2s ease, box-shadow .2s ease; }
+  .lift:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(85, 26, 24, 0.14); }
+  .fade-in { animation: rise .55s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @media (max-width: 620px) {
+    .px { padding-left: 20px !important; padding-right: 20px !important; }
+    .stack { display: block !important; width: 100% !important; box-sizing: border-box; }
+    .stack-sm { display: block !important; width: 100% !important; }
+    .h1 { font-size: 29px !important; line-height: 1.25 !important; }
+    .h2 { font-size: 21px !important; line-height: 1.35 !important; }
+    .stat { padding: 14px !important; }
+    .btn { display: block !important; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in, .lift { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<div style="background: linear-gradient(180deg, #f6e3dd 0%, #fff9eb 42%, #f8f2e8 100%); padding: 28px 12px;">
+<div class="wrap">
+
+  <!-- Masthead -->
+  <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr>
+      <td style="text-align: left;">
+        <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+          <tr>
+            <td style="width: 50px; height: 50px; vertical-align: middle;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFRGlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI2LTEwLTA1PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkRhdGE+eyZxdW90O2RvYyZxdW90OzomcXVvdDtEQUhYSmNFQVVEZyZxdW90OywmcXVvdDt1c2VyJnF1b3Q7OiZxdW90O1VBRWQ0b05Kd29RJnF1b3Q7LCZxdW90O2JyYW5kJnF1b3Q7OiZxdW90O0JBRWQ0aDZMS3lNJnF1b3Q7fTwvQXR0cmliOkRhdGE+CiAgICAgPEF0dHJpYjpFeHRJZD5hZTg0NjM2ZS04YzVjLTQ0YzItOWE0Mi0xMjJkNGQyOTc1YWE8L0F0dHJpYjpFeHRJZD4KICAgICA8QXR0cmliOkZiSWQ+NTI1MjY1OTE0MTc5NTgwPC9BdHRyaWI6RmJJZD4KICAgICA8QXR0cmliOlRvdWNoVHlwZT4yPC9BdHRyaWI6VG91Y2hUeXBlPgogICAgPC9yZGY6bGk+CiAgIDwvcmRmOlNlcT4KICA8L0F0dHJpYjpBZHM+CiA8L3JkZjpEZXNjcmlwdGlvbj4KCiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0nJwogIHhtbG5zOmRjPSdodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4x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" alt="Adeyinka Bakare Fellowship logo" width="50" height="50" style="display:block;width:50px;height:50px;object-fit:contain;border:0;" /></td>
+            <td style="padding-left: 12px; vertical-align: middle;">
+              <div style="font-size: 13px; font-weight: 800; letter-spacing: .01em;">Adeyinka Bakare Fellowship</div>
+              <div style="font-size: 11px; color: #7b5b55; margin-top: 2px;">Empowering Futures, Transforming Lives</div>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td style="text-align: right; font-size: 11px; color: #7b5b55; font-weight: 700; letter-spacing: .1em;">EXECUTIVE BRIEF · 2026</td>
+    </tr>
+  </table>
+
+  <!-- Hero -->
+  <table role="presentation" class="fluid fade-in" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background: linear-gradient(145deg, #551a18 0%, #aa322b 68%, #922821 100%); border-radius: 22px; overflow: hidden; box-shadow: 0 24px 60px rgba(59,19,20,.28);">
+    <tr>
+      <td class="px" style="padding: 46px 44px 40px;">
+        <div style="display: inline-block; padding: 7px 14px; border-radius: 999px; background: rgba(255,224,138,.16); border: 1px solid rgba(255,224,138,.45); color: #ffe08a; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;">Website Project · Rundown &amp; Handover</div>
+        <h1 class="h1 display" style="margin: 22px 0 16px; color: #ffffff; font-size: 42px; line-height: 1.18; letter-spacing: -.02em;">A digital home worthy<br />of the fellowship.</h1>
+        <p style="margin: 0 0 22px; max-width: 560px; color: #f6e3dd; font-size: 15px; line-height: 1.8;">
+          This document is the executive record of the ABF website project: what was built, why it was built that way, who contributed what, and what the team learned along the way. It is written to be read in ten minutes and kept as a reference for the next phase.
+        </p>
+        <div class="gold-rule" style="width: 92px; margin: 0 0 24px;"></div>
+        <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+          <tr>
+            <td style="padding-right: 10px;"><span class="btn" style="background: #fff; color: #73201c !important;">Built, reviewed and handed over</span></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- At a glance -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 22px 0;">
+    <tr><td class="px" style="padding: 26px 28px 12px;">
+      <div class="eyebrow">At a glance</div>
+      <h2 class="h2 display" style="margin: 8px 0 20px; font-size: 22px;">The shape of the delivered system</h2>
+    </td></tr>
+    <tr>
+      <td class="px" style="padding: 0 28px 26px;">
+        <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+          <tr>
+            <td class="stack stat" width="25%" valign="top" style="padding: 14px; background: #fbf4f1; border-radius: 12px;">
+              <div class="display" style="font-size: 25px; color: #aa322b; font-weight: 700;">18</div>
+              <div style="font-size: 11px; color: #7b5b55; line-height: 1.5; margin-top: 6px;">Public pages and routes</div>
+            </td>
+            <td width="8">&nbsp;</td>
+            <td class="stack stat" width="25%" valign="top" style="padding: 14px; background: #fff9eb; border-radius: 12px;">
+              <div class="display" style="font-size: 25px; color: #8a5f07; font-weight: 700;">106</div>
+              <div style="font-size: 11px; color: #7b5b55; line-height: 1.5; margin-top: 6px;">Commits so far</div>
+            </td>
+            <td width="8">&nbsp;</td>
+            <td class="stack stat" width="25%" valign="top" style="padding: 14px; background: #fbf4f1; border-radius: 12px;">
+              <div class="display" style="font-size: 25px; color: #aa322b; font-weight: 700;">458</div>
+              <div style="font-size: 11px; color: #7b5b55; line-height: 1.5; margin-top: 6px;">Tracked project files</div>
+            </td>
+            <td width="8">&nbsp;</td>
+            <td class="stack stat" width="25%" valign="top" style="padding: 14px; background: #fff9eb; border-radius: 12px;">
+              <div class="display" style="font-size: 25px; color: #8a5f07; font-weight: 700;">16.3</div>
+              <div style="font-size: 11px; color: #7b5b55; line-height: 1.5; margin-top: 6px;">Next.js App Router Stack</div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- Section 1 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 0;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">01</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Purpose &amp; scope</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 12px; font-size: 25px;">What this website is for</h2>
+      <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.85; color: #5f4a46;">
+        The site is the public face and the operating system of the Adeyinka Bakare Fellowship — a student-focused scholarship and mentorship community rooted in the Department of Information Technology at the University of Ilorin. It has two jobs: to tell the truth about the fellowship to prospective members, partners and beneficiaries, and to give the admin team a reliable place to publish, organise and measure that work.
+      </p>
+      <p style="margin: 0 0 20px; font-size: 14px; line-height: 1.85; color: #5f4a46;">
+        Content is deliberately grounded in the ABF constitution and in real database records. Where a fact is not known, the interface says so rather than inventing a testimonial, rating or statistic. That decision runs through the whole build.
+      </p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fbf4f1; border-left: 3px solid #aa322b; border-radius: 0 10px 10px 0;">
+            <div style="font-size: 12px; font-weight: 800; color: #73201c; margin-bottom: 6px;">PUBLIC WEBSITE</div>
+            <div style="font-size: 13px; line-height: 1.7; color: #5f4a46;">Discover the mission, programmes, events, news and the many ways to take part. Every route is responsive, accessible and driven by published content.</div>
+          </td>
+          <td width="12">&nbsp;</td>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fff9eb; border-left: 3px solid #efb11f; border-radius: 0 10px 10px 0;">
+            <div style="font-size: 12px; font-weight: 800; color: #6d4a06; margin-bottom: 6px;">ADMIN CONSOLE</div>
+            <div style="font-size: 13px; line-height: 1.7; color: #5f4a46;">Manage content, media, people, applications, email and security behind a permission model that reflects real responsibilities.</div>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+
+  <!-- Section 2 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 8px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">02</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Design system</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 12px; font-size: 25px;">A brand that behaves consistently</h2>
+      <p style="margin: 0 0 18px; font-size: 14px; line-height: 1.85; color: #5f4a46;">
+        ABF's visual identity is encoded as design tokens in <code style="background:#fbf4f1;padding:2px 5px;border-radius:4px;font-size:12px;">globals.css</code>, not scattered as one-off hex values. That makes the maroon, gold and cream palette behave the same way in a hero, a dashboard card and an email.
+      </p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td class="stack" width="33%" valign="top" style="padding: 16px; text-align: center; background: #fff; border: 1px solid #ecdfd2; border-radius: 12px;">
+            <div style="margin: 0 auto 10px; width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg,#aa322b,#551a18);"></div>
+            <div style="font-size: 12px; font-weight: 800;">Maroon</div>
+            <div style="font-size: 11px; color: #7b5b55; line-height: 1.6; margin-top: 5px;">Primary actions, links, dark editorial surfaces</div>
+          </td>
+          <td width="10">&nbsp;</td>
+          <td class="stack" width="33%" valign="top" style="padding: 16px; text-align: center; background: #fff; border: 1px solid #ecdfd2; border-radius: 12px;">
+            <div style="margin: 0 auto 10px; width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg,#f8c84d,#d9960d);"></div>
+            <div style="font-size: 12px; font-weight: 800;">Gold</div>
+            <div style="font-size: 11px; color: #7b5b55; line-height: 1.6; margin-top: 5px;">Highlights, badges, ceremonial accents</div>
+          </td>
+          <td width="10">&nbsp;</td>
+          <td class="stack" width="33%" valign="top" style="padding: 16px; text-align: center; background: #fff; border: 1px solid #ecdfd2; border-radius: 12px;">
+            <div style="margin: 0 auto 10px; width: 38px; height: 38px; border-radius: 10px; background: #f8f2e8; border: 1px solid #ead9c4;"></div>
+            <div style="font-size: 12px; font-weight: 800;">Cream</div>
+            <div style="font-size: 11px; color: #7b5b55; line-height: 1.6; margin-top: 5px;">Reading surfaces and calm page backgrounds</div>
+          </td>
+        </tr>
+      </table>
+      <div style="margin-top: 18px; padding: 16px 18px; background: #fbf4f1; border-radius: 12px;">
+        <div style="font-size: 12px; font-weight: 800; color: #73201c; margin-bottom: 8px;">Typography &amp; icons</div>
+        <p style="margin: 0 0 8px; font-size: 13px; line-height: 1.8; color: #5f4a46;"><strong>Libre Baskerville</strong> carries headings and editorial moments; <strong>Plus Jakarta Sans</strong> handles body copy and interface text. The contrast gives the brand a serious, scholarly voice without sacrificing readability on a phone.</p>
+        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #5f4a46;"><strong>Lucide</strong> supplies a single, consistent icon language across navigation, cards, forms, admin tables and the weekly email. Icons are decorative by default (<code style="font-size:11px;">aria-hidden</code>) so screen readers hear the label, not the shape.</p>
+      </div>
+      <p style="margin: 16px 0 0; font-size: 13px; line-height: 1.8; color: #5f4a46;">White is reserved for maroon-500 and darker. Motion — reveal animations, count-up statistics, hover lifts — is present but restrained, and respects reduced-motion preferences.</p>
+    </td></tr>
+  </table>
+
+  <!-- Section 3 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 10px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">03</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Public site tour</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">Every route is used</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 13px;">
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; width: 128px; font-weight: 800; color: #73201c;">Home</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Editorial hero, mission and vision drawn from the constitution, count-up impact figures, linked programmes and clear entry points into membership and events.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">About</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">The fellowship's story, beliefs and governance, structured so a visitor can understand who ABF is before being asked to join.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Programmes</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Four flagship programmes seeded from the constitution, each with a detail page describing purpose and participation.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Events</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Listing and detail pages with dates, location, full event imagery, applications and a share action.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">News</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">A redesigned editorial newsroom — featured story, related reading, full-width article media and a tidy metadata rail.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Get involved</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Membership and volunteering routes with real sign-up details and an admin-side review workflow.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Contact &amp; footer</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Official email, phone, WhatsApp and enquiry links from a single external-links config; newsletter signup and a working unsubscribe route.</td></tr>
+        <tr><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Beneficiaries &amp; testimonials</td><td valign="top" style="padding: 10px 0; border-top: 1px solid #f0e5da; line-height: 1.75; color: #5f4a46;">Real records mapped carefully into card shapes, with no invented ratings or decorative numbers.</td></tr>
+      </table>
+    </td></tr>
+  </table>
+
+  <!-- Section 4 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 10px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">04</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Admin console</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">The control room behind the website</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fbf4f1; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #73201c; margin-bottom: 8px;">DAY-TO-DAY OPERATIONS</div>
+            <div style="font-size: 13px; line-height: 1.85; color: #5f4a46;">Dashboard with live counts, shared list and form components, resource CRUD for news, events, programmes, media, content blocks, volunteers, admins and social links, plus a command-palette search and breadcrumb-aware header.</div>
+          </td>
+          <td width="12">&nbsp;</td>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fff9eb; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #6d4a06; margin-bottom: 8px;">COMMUNICATION &amp; TRUST</div>
+            <div style="font-size: 13px; line-height: 1.85; color: #5f4a46;">Email studio and logs, notification centre, event application responses, volunteer status updates, an audit trail, MFA and passkey settings, and an active-sessions view where devices can be reviewed and revoked.</div>
+          </td>
+        </tr>
+      </table>
+      <p style="margin: 18px 0 0; font-size: 13px; line-height: 1.85; color: #5f4a46;">The admin area uses the same design tokens as the public site, so a new administrator does not have to learn two visual languages. Navigation, destructive actions and palette choices are gated by role rather than hidden by convention.</p>
+    </td></tr>
+  </table>
+
+  <!-- Section 5 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 10px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">05</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Latest editorial work</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">Newsroom, media and sharing</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.85; color: #5f4a46;">The public news listing was rebuilt as an editorial page: a featured split-card story, a quieter “More from ABF” grid, stronger typographic hierarchy and responsive behaviour that still reads well with a single published story.</p>
+      <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.85; color: #5f4a46;">On article pages, the complete image is now shown in a full-media figure rather than being cropped into an invisible header. Event detail pages received the same treatment, so a poster or photograph is presented as content, not decoration.</p>
+      <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.85; color: #5f4a46;">Calls to action authored inside articles now keep white text on maroon, and older stored HTML is covered by compatibility selectors. The share control was generalised into one component used by both news and events: native share where available, copy-to-clipboard and a toast everywhere else.</p>
+      <p style="margin: 0; font-size: 14px; line-height: 1.85; color: #5f4a46;">A related bug in news creation was fixed at the repository layer: a slug-availability lookup used a single-row query that raised <code style="font-size:12px;background:#fbf4f1;padding:2px 5px;border-radius:4px;">PGRST116</code> when the slug was free, and the insert now returns the created row through the admin client so RLS cannot hide it.</p>
+    </td></tr>
+  </table>
+
+  <!-- Section 6 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 10px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">06</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Email &amp; automation</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">The weekly digest</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.85; color: #5f4a46;">A weekly letter is generated from the previous completed Monday–Sunday week. It gathers published news, events and upcoming dates, new members and subscribers, volunteer and application activity, and a set of operational metrics. Two HTML emails are produced: a long, member-facing letter with reflection, encouragement and practical student advice, and a separate confidential admin report covering security, database health, email delivery and recommended actions.</p>
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin: 8px 0 16px;">
+        <tr>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fbf4f1; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #73201c; margin-bottom: 8px;">MEMBER LETTER</div>
+            <div style="font-size: 13px; line-height: 1.8; color: #5f4a46;">Table-based responsive layout, quick-navigation pills, stat cards, story cards with images, collapsible sections for longer reading, animation with reduced-motion fallback, and personalised unsubscribe links.</div>
+          </td>
+          <td width="12">&nbsp;</td>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fff9eb; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #6d4a06; margin-bottom: 8px;">ADMIN REPORT</div>
+            <div style="font-size: 13px; line-height: 1.8; color: #5f4a46;">Audit activity, MFA and passkey coverage, active sessions, mail failures, content and media volume, volunteer backlog and an explicit recommendation list for the week ahead.</div>
+          </td>
+        </tr>
+      </table>
+      <p style="margin: 0 0 10px; font-size: 13px; line-height: 1.8; color: #5f4a46;">Recipients are deduplicated by lowercase email across members, subscribers and admins. Admins receive the member letter once, plus the confidential report. Idempotency is enforced by a <code style="font-size:12px;">weekly_digest_runs</code> row and by email-log metadata keyed to the week, so a repeated cron call does not resend the issue.</p>
+      <div class="code">GET https://abfimpact.org/api/cron/weekly-digest?secret=&lt;CRON_SECRET&gt;<br /><span style="color:#ffe08a;"># recommended schedule, Fridays 08:00 UTC</span><br />0 8 * * 5</div>
+    </td></tr>
+  </table>
+
+  <!-- Section 7 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 10px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">07</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Security model</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">Least privilege, by default</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.85; color: #5f4a46;">Supabase Row Level Security is the boundary for public and authenticated traffic; service-role access is confined to trusted server code such as repositories and cron jobs. A permission matrix maps roles to capabilities, and the same rules are enforced in route handlers, navigation and UI actions — a hidden button is never the only control.</p>
+      <p style="margin: 0 0 12px; font-size: 14px; line-height: 1.85; color: #5f4a46;">Privileged accounts support TOTP, passkeys and email OTP, with MFA requirements recorded per admin. Sessions are visible and revocable, and admin actions are written to an audit log that the weekly report summarises. The cron endpoint accepts a shared secret by query parameter or header and fails closed in production when no secret is configured.</p>
+    </td></tr>
+  </table>
+
+  <!-- Section 8 -->
+  <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td style="padding: 4px 2px 18px;">
+      <div class="eyebrow" style="color:#6d4a06;">Contribution record</div>
+      <h2 class="h2 display" style="margin: 8px 0 6px; font-size: 25px;">Software Engineers: Prince and Damilare</h2>
+      <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #7b5b55;">Two engineers carried the project end to end: <strong>Prince Techtune</strong> and <strong>Damilare</strong>, whose Git commits are recorded under <strong>Whitecodre &lt;dammyboy709@gmail.com&gt;</strong>. The repository records 31 commits for Prince and 62 for Damilare; merge commits from review are not counted as development work. Commit names are self-reported, so this is the repository's authorship record.</p>
+    </td></tr>
+  </table>
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 28px 30px 8px;">
+      <div style="font-size: 12px; font-weight: 800; color: #73201c; letter-spacing: .1em;">PRINCE · ARCHITECTURE, FULL STACK &amp; SECURITY</div>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;">
+      <p style="margin: 0; font-size: 14px; line-height: 1.85; color: #5f4a46;">Built the full-stack expansion: the complete ABF website and premium homepage, then the comprehensive admin dashboard with authentication, MFA and full CRUD. Wired the console to live data, Zoho admin invitations and the email studio behind a secure proxy; introduced branded email templates using the ABF logo, a professional hero and remote image origins. Hardened sign-in with TOTP QR verification, Windows Hello passkey prompts, passkey-list 405 handling and the bytea/placeholder verification fix. Added event application forms with response management, newsletter footer and toaster wiring, and the later iterative fixes across public and admin pages. The latest tranche — newsroom redesign, complete-media presentation, article CTA and share fixes, the news-creation error, and the weekly digest system with its cron endpoint — was delivered on the same branch. <br>
+        On the security side: a role-permission matrix and <code style="font-size:12px;">requirePermission</code> guard, 401/403 enforcement on admin routes, role-gated navigation and destructive actions, and <strong>RLS enforcement of role permissions</strong> in the database. Also moved admin notification emails after the HTTP response and parallelised proxy lookups.<br></p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;">
+      <span class="pill">31 commits</span> <span class="pill pill-gold">Architecture → email → MFA → applications → automation → Security</span>
+    </td></tr>
+  </table>
+
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 28px 30px 8px;">
+      <div style="font-size: 12px; font-weight: 800; color: #73201c; letter-spacing: .1em;">DAMILARE · FOUNDATIONS, DESIGN &amp; PERMISSIONS</div>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;">
+      <p style="margin: 0; font-size: 14px; line-height: 1.85; color: #5f4a46;">Authored the earliest commits — project proposal, <strong>Next.js scaffold</strong>, brand data and schema — then configured the <strong>Tailwind v4 CSS-first theme</strong>. Built the shared layout and interaction primitives (tilt, magnetic, ripple, scroll progress, back-to-top), the responsive homepage with parallax hero and count-up statistics, the constitution-based About page, navbar and mobile menu, and the footer. Added the ABF design system, foundations documentation and interactive previews as the source of truth for everyone who followed.</p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;"><div class="gold-rule" style="width:60px;"></div></td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;">
+      <div style="font-size: 12px; font-weight: 800; color: #73201c; letter-spacing: .1em;">PUBLIC PAGES &amp; CONTENT · OCTOBER 9–16, 2026</div>
+      <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.85; color: #5f4a46;">Rebuilt Programmes from the constitution and seeded the four flagship programmes; rebuilt membership and contact pages around real external links; replaced raw hex values with design tokens; reworked the vision and mission section and the footer. Later commits adapted cards and content blocks to <strong>real public data</strong> — equal programme headers, masonry testimonials, no invented ratings — and added brand social icons, email and WhatsApp links with saved ordering.</p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;"><div class="gold-rule" style="width:60px;"></div></td></tr>
+    <tr><td class="px" style="padding: 0 30px 20px;">
+      <div style="font-size: 12px; font-weight: 800; color: #73201c; letter-spacing: .1em;">ADMIN SYSTEM &amp; PERMISSIONS · OCTOBER 12–16, 2026</div>
+      <p style="margin: 8px 0 0; font-size: 14px; line-height: 1.85; color: #5f4a46;">Introduced the shared admin design system — page headers, resource lists, list rows, status badges, branded and loading buttons, skeletons — and migrated record pages onto it. Completed the design of the command-palette search, shared content/media/news forms and edit routes, a volunteer detail page with sign-up details and status updates, a cleaner image-upload display, and a signed-in admin identity in the header.</p>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <span class="pill">62 commits</span> <span class="pill pill-gold">Scaffold → design → public → admin → security</span>
+    </td></tr>
+  </table>
+
+
+  <!-- Section 9 -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 30px 30px 8px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" style="border-collapse: collapse;"><tr>
+        <td><span class="section-num">09</span></td>
+        <td style="padding-left: 13px;"><div class="eyebrow">Institutional memory</div></td>
+      </tr></table>
+      <h2 class="h2 display" style="margin: 16px 0 14px; font-size: 25px;">What the team learned</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 28px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; font-size: 13px; line-height: 1.8; color: #5f4a46;">
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; width: 190px; font-weight: 800; color: #73201c;">CSS-first theming</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">Tailwind v4 keeps the palette in CSS variables. Tokens survive refactors; scattered hex values do not. Cascade layers matter when authored article HTML needs to override prose defaults.</td></tr>
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Server/client boundary</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">Next.js App Router rewards keeping data access on the server and isolating only interactive islands — share buttons, forms and dialogs — in client components.</td></tr>
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Two layers of trust</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">RLS plus a permission matrix is stronger than either alone. Service-role code must stay server-side and be reviewed as a privileged boundary, especially where a single-row query can throw on zero rows.</td></tr>
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">MFA is a workflow</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">Passkeys and TOTP are not just toggles: enrolment, verification, recovery, session revocation and clear user-facing status all have to work together.</td></tr>
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Email is a different web</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">Table layouts, inline-friendly styles, modest animation and progressive enhancement (details/summary) travel further across clients than modern page CSS does.</td></tr>
+        <tr><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da; font-weight: 800; color: #73201c;">Automation needs brakes</td><td valign="top" style="padding: 12px 0; border-top: 1px solid #f0e5da;">Idempotency by week, recipient deduplication, a dry-run switch and a well-defined auth contract turn a cron job from a risk into a routine operation.</td></tr>
+      </table>
+    </td></tr>
+  </table>
+
+  <!-- Next steps -->
+  <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 4px 2px 14px;">
+      <div class="eyebrow">Handover</div>
+      <h2 class="h2 display" style="margin: 8px 0 12px; font-size: 25px;">Recommended next steps</h2>
+      <div style="background:#fff;border:1px solid #ecdfd2;border-radius:16px;padding:20px 22px;">
+        <div style="font-size:13px;line-height:2;color:#5f4a46;">
+          All the features has been implemented and verified. Maintenance will be carried out occassionally as well. <br />
+          What's left is to go through the deployed website fully and review all that has been done. <br />
+          The President was carried along as well.
+        </div>
+      </div>
+    </td></tr>
+  </table>
+
+  <!-- Acknowledgements -->
+  <table role="presentation" class="fluid card lift" cellpadding="0" cellspacing="0" style="border-collapse: collapse; margin-bottom: 22px;">
+    <tr><td class="px" style="padding: 26px 30px 8px;">
+      <div class="eyebrow">Acknowledgements</div>
+      <h2 class="h2 display" style="margin: 8px 0 18px; font-size: 23px;">The people behind the work</h2>
+    </td></tr>
+    <tr><td class="px" style="padding: 0 30px 26px;">
+      <table role="presentation" class="fluid" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+        <tr>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fbf4f1; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #73201c; margin-bottom: 7px;">DEVELOPMENT TEAM</div>
+            <div style="font-size: 13px; line-height: 1.8; color: #5f4a46;"><strong>Prince Techtune</strong> and <strong>Damilare</strong> — the two contributors who designed, built, reviewed and shipped this website together. <br />
+            <strong>Glory Adeniran</strong>; The President and the P.R.O. as well as the fellowships secretary for their inputs and contributions as well.</div>
+          </td>
+          <td width="12">&nbsp;</td>
+          <td class="stack" width="50%" valign="top" style="padding: 16px; background: #fff9eb; border-radius: 12px;">
+            <div style="font-size: 12px; font-weight: 800; color: #6d4a06; margin-bottom: 7px;">ABF EXECUTIVES</div>
+            <div style="font-size: 13px; line-height: 1.8; color: #5f4a46;">Including <strong>Mr Ademola</strong> — thank you for working closely with the development team, setting direction and keeping the fellowship's mission at the centre of the work.</div>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+
+  <!-- Closing -->
+  <table role="presentation" class="fluid fade-in" cellpadding="0" cellspacing="0" style="border-collapse: collapse; background: linear-gradient(135deg,#3b1314,#73201c); border-radius: 20px;">
+    <tr><td class="px" style="padding: 34px 34px 32px;">
+      <div style="color:#ffe08a;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;">With appreciation</div>
+      <p style="margin: 14px 0 12px; color:#f6e3dd; font-size:14px; line-height:1.9;">
+        This project was built by everyone who contributed one way or another, working side by side: Prince Techtune and Damilare, the President, the Secretary and the P.R.O and every other person who are involved as well. We also gratefully acknowledge the ABF executives, including Mr Ademola, for working closely with the development team and keeping the mission, content and decisions clear throughout. The fellowship now has a digital home that can grow with its mission.
+      </p>
+      <div class="gold-rule" style="width:74px;margin-top:18px;"></div>
+      <p style="margin: 16px 0 0; color:#ebc3b9; font-size:12px; line-height:1.7;">Prepared for the ABF Executive Team · Rundown and handover of the website project · Adeyinka Bakare Fellowship.</p>
+    </td></tr>
+  </table>
+
+  <p style="text-align:center;color:#9c817c;font-size:11px;line-height:1.7;margin:22px 0 6px;">
+    This document is a standalone HTML brief. It can be opened in a browser or pasted into an email without external images or scripts.
+  </p>
+
+</div>
+</div>
+</body>
+</html>

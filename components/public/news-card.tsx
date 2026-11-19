@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { format } from "date-fns";
 
-interface NewsItem {
+export interface NewsItem {
   id: string;
   title: string;
   slug: string;
