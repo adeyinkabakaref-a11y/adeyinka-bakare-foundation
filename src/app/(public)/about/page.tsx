@@ -29,6 +29,7 @@ import { Reveal } from "@/components/public/reveal";
 import { ScrollFocus } from "@/components/public/scroll-focus";
 import { Section, SectionHeading } from "@/components/public/section";
 import { SectionDots } from "@/components/public/section-dots";
+import { ExecutivesShowcase, loadFeaturedExecutives } from "@/components/public/executives-showcase";
 
 export const metadata: Metadata = {
   title: "About ABF | Adeyinka Bakare Fellowship",
@@ -64,10 +65,22 @@ function CheckList({ items }: { items: readonly string[] }) {
   );
 }
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const executives = await loadFeaturedExecutives();
+
+  // Only list the executives dot when that section is actually on the page.
+  const sections =
+    executives.length > 0
+      ? [
+          ...aboutSections.slice(0, 6),
+          { id: "executives", label: "Executives" },
+          ...aboutSections.slice(6),
+        ]
+      : aboutSections;
+
   return (
     <>
-      <SectionDots sections={aboutSections} />
+      <SectionDots sections={sections} />
       <PageHero
         eyebrow="About ABF"
         title="Who we are"
@@ -261,6 +274,9 @@ export default function AboutPage() {
           />
         </Reveal>
       </Section>
+
+      {/* The people behind the roles */}
+      <ExecutivesShowcase executives={executives} id="executives" />
 
       {/* Governance */}
       <Section width="prose" id="governance">

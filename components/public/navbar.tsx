@@ -18,8 +18,11 @@ interface SiteSettings {
   favicon?: string;
 }
 
-export function Navbar() {
+export function Navbar({ showExecutives = false }: { showExecutives?: boolean }) {
   const pathname = usePathname();
+  const navItems = publicNavigation.filter(
+    (item) => item.href !== "/executives" || showExecutives
+  );
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -105,7 +108,7 @@ export function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Main">
-          {publicNavigation
+          {navItems
             .filter((item) => item.href !== "/")
             .slice(0, 5)
             .map((item) => {
@@ -193,7 +196,7 @@ export function Navbar() {
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="pointer-events-auto absolute inset-x-3 top-[72px] max-h-[calc(100dvh-88px)] overflow-y-auto rounded-2xl bg-white p-3 shadow-2xl md:hidden"
             >
-              {publicNavigation.map((item, index) => {
+              {navItems.map((item, index) => {
                 const isActive = pathname === item.href;
 
                 return (

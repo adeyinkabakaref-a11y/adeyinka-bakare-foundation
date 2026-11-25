@@ -5,6 +5,7 @@ export const publicNavigation = [
   { label: "Beneficiaries", href: "/beneficiaries" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Events", href: "/events" },
+  { label: "Executives", href: "/executives" },
   { label: "News", href: "/news" },
   { label: "Get Involved", href: "/get-involved" },
   { label: "Contact", href: "/contact" },
