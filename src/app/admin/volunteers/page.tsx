@@ -32,6 +32,7 @@ export default function VolunteersPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -71,6 +72,7 @@ export default function VolunteersPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/volunteers/${id}`, {
         method: "DELETE",
@@ -94,6 +96,8 @@ export default function VolunteersPage() {
         title: "Error",
         description: "Failed to delete volunteer",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -155,6 +159,7 @@ export default function VolunteersPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

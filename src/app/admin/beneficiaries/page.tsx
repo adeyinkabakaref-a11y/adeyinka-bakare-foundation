@@ -33,6 +33,7 @@ export default function AdminBeneficiariesPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [beneficiaries, setBeneficiaries] = useState<Beneficiary[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -71,6 +72,7 @@ export default function AdminBeneficiariesPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/beneficiaries/${id}`, {
         method: "DELETE",
@@ -94,6 +96,8 @@ export default function AdminBeneficiariesPage() {
         title: "Error",
         description: "Failed to delete beneficiary",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -165,6 +169,7 @@ export default function AdminBeneficiariesPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

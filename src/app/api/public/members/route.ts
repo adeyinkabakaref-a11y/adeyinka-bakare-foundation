@@ -14,8 +14,24 @@ export async function POST(request: NextRequest) {
     // Validate input
     const validatedData = memberSchema.parse(body);
 
-    // Create member using admin client to bypass RLS
+    // Check if member already exists by email
     const supabase = createAdminClient();
+    if (validatedData.email) {
+      const { data: existingMember } = await supabase
+        .from("members")
+        .select("id, full_name")
+        .eq("email", validatedData.email)
+        .maybeSingle();
+
+      if (existingMember) {
+        return NextResponse.json(
+          { success: false, error: "You are already registered as a member. Please contact us if you need to update your information." },
+          { status: 409 }
+        );
+      }
+    }
+
+    // Create member using admin client to bypass RLS
     const { data: member, error } = await supabase
       .from("members")
       .insert({

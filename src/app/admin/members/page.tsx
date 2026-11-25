@@ -32,6 +32,7 @@ export default function MembersPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -70,6 +71,7 @@ export default function MembersPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/members/${id}`, {
         method: "DELETE",
@@ -93,6 +95,8 @@ export default function MembersPage() {
         title: "Error",
         description: "Failed to delete member",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -162,6 +166,7 @@ export default function MembersPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

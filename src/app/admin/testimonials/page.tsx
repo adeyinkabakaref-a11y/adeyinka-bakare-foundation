@@ -30,6 +30,7 @@ export default function TestimonialsPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -66,6 +67,7 @@ export default function TestimonialsPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/testimonials/${id}`, {
         method: "DELETE",
@@ -89,6 +91,8 @@ export default function TestimonialsPage() {
         title: "Error",
         description: "Failed to delete testimonial",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -169,6 +173,7 @@ export default function TestimonialsPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

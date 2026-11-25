@@ -5,14 +5,30 @@ import { sendEmail } from "@/lib/email/send";
 import { volunteerReceivedEmail } from "@/lib/email/templates";
 import { logEmail } from "@/lib/email/log";
 import { notifyAdmins } from "@/lib/email/admin-notifications";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Validate input
     const validatedData = volunteerSchema.parse(body);
-    
+
+    // Check if volunteer already exists by email
+    const supabase = createAdminClient();
+    const { data: existingVolunteer } = await supabase
+      .from("volunteers")
+      .select("id, full_name")
+      .eq("email", validatedData.email)
+      .maybeSingle();
+
+    if (existingVolunteer) {
+      return NextResponse.json(
+        { success: false, error: "You have already submitted a volunteer application. Our team will review it and reach out to you." },
+        { status: 409 }
+      );
+    }
+
     // Create volunteer via service layer
     const volunteer = await createNewVolunteer(validatedData);
     try {
@@ -23,23 +39,23 @@ export async function POST(request: NextRequest) {
     try { await notifyAdmins({ title: "New Volunteer Application", message: `${validatedData.full_name} (${validatedData.email}) applied${(validatedData as any).interest ? ` for ${(validatedData as any).interest}` : ""}.`, ctaUrl: "/admin/volunteers", ctaLabel: "View Applications" }); } catch {}
 
     return NextResponse.json(
-      { 
-        success: true, 
+      {
+        success: true,
         data: volunteer,
-        message: "Volunteer application submitted successfully" 
+        message: "Volunteer application submitted successfully"
       },
       { status: 201 }
     );
   } catch (error) {
     console.error("Volunteer submission error:", error);
-    
+
     if (error instanceof Error && error.message.includes("Invalid email")) {
       return NextResponse.json(
         { success: false, error: "Invalid email address" },
         { status: 400 }
       );
     }
-    
+
     return NextResponse.json(
       { success: false, error: "Failed to submit volunteer application" },
       { status: 500 }
