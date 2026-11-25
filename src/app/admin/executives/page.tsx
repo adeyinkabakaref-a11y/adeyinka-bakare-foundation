@@ -48,6 +48,7 @@ export default function AdminExecutivesPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [executives, setExecutives] = useState<Executive[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -79,6 +80,7 @@ export default function AdminExecutivesPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/executives/${id}`, { method: "DELETE" });
       const result = await response.json();
@@ -90,6 +92,8 @@ export default function AdminExecutivesPage() {
     } catch (error) {
       console.error("Error deleting executive:", error);
       toast({ variant: "destructive", title: "Error", description: "Failed to delete executive" });
+    } finally {
+      setDeleting(false);
     }
   };
 

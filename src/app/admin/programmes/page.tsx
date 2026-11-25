@@ -30,6 +30,7 @@ export default function ProgrammesPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [programmes, setProgrammes] = useState<Programme[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -68,6 +69,7 @@ export default function ProgrammesPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/programmes/${id}`, {
         method: "DELETE",
@@ -91,6 +93,8 @@ export default function ProgrammesPage() {
         title: "Error",
         description: "Failed to delete programme",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -159,6 +163,7 @@ export default function ProgrammesPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

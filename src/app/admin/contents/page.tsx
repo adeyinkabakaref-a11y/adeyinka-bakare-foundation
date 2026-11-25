@@ -29,6 +29,7 @@ export default function ContentsPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [contents, setContents] = useState<Content[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -67,6 +68,7 @@ export default function ContentsPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/contents/${id}`, {
         method: "DELETE",
@@ -90,6 +92,8 @@ export default function ContentsPage() {
         title: "Error",
         description: "Failed to delete content",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -159,6 +163,7 @@ export default function ContentsPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

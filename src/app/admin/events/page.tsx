@@ -33,6 +33,7 @@ export default function EventsPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
   const [events, setEvents] = useState<Event[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
@@ -71,6 +72,7 @@ export default function EventsPage() {
   );
 
   const handleDelete = async (id: string) => {
+    setDeleting(true);
     try {
       const response = await fetch(`/api/admin/events/${id}`, {
         method: "DELETE",
@@ -94,6 +96,8 @@ export default function EventsPage() {
         title: "Error",
         description: "Failed to delete event",
       });
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -172,6 +176,7 @@ export default function EventsPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );
