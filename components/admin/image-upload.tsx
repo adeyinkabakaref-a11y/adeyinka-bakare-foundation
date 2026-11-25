@@ -18,6 +18,7 @@ export type UploadResource =
   | "content"
   | "members"
   | "beneficiaries"
+  | "executives"
   | "social-links"
   | "footer"
   | "settings"

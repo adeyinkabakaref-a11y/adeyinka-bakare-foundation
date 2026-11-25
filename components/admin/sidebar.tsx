@@ -12,6 +12,7 @@ import {
   Users,
   UserPlus,
   GraduationCap,
+  Award,
   BookOpen,
   MessageSquare,
   Calendar,
@@ -59,6 +60,12 @@ export const adminNavigation: NavItem[] = [
     label: "Beneficiaries",
     href: "/admin/beneficiaries",
     icon: GraduationCap,
+    group: "People",
+  },
+  {
+    label: "Executives",
+    href: "/admin/executives",
+    icon: Award,
     group: "People",
   },
   {
