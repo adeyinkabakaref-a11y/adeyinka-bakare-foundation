@@ -1,3 +1,5 @@
+import { unstable_rethrow } from "next/navigation";
+
 import {
   anyPublishedExecutive,
   createExecutive,
@@ -28,6 +30,7 @@ export async function hasPublishedExecutives() {
   try {
     return await anyPublishedExecutive();
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error checking for published executives:", error);
     return false;
   }

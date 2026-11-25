@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_rethrow } from "next/navigation";
 import { Award } from "lucide-react";
 
 import { PageHero } from "@/components/public/page-hero";
@@ -19,6 +20,7 @@ async function loadExecutives() {
   try {
     return await getPublishedExecutives();
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error loading executives:", error);
     return [];
   }

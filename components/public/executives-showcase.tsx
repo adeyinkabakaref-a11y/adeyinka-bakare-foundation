@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { unstable_rethrow } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import { ExecutiveGrid, type PublicExecutive } from "@/components/public/executive-card";
@@ -15,6 +16,7 @@ export async function loadFeaturedExecutives(limit = 8): Promise<PublicExecutive
     const featured = await getFeaturedExecutives();
     return featured.slice(0, limit);
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Error loading featured executives:", error);
     return [];
   }
