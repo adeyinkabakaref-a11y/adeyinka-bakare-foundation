@@ -298,6 +298,53 @@ created_at?: string;
 updated_at?: string;
 };
 };
+executives: {
+Row: {
+id: string;
+full_name: string;
+position: string;
+bio: string | null;
+photo: string | null;
+linkedin_url: string | null;
+twitter_url: string | null;
+instagram_url: string | null;
+display_order: number;
+featured: boolean;
+status: "draft" | "published" | "archived";
+created_at: string;
+updated_at: string;
+};
+Insert: {
+id?: string;
+full_name: string;
+position: string;
+bio?: string | null;
+photo?: string | null;
+linkedin_url?: string | null;
+twitter_url?: string | null;
+instagram_url?: string | null;
+display_order?: number;
+featured?: boolean;
+status?: "draft" | "published" | "archived";
+created_at?: string;
+updated_at?: string;
+};
+Update: {
+id?: string;
+full_name?: string;
+position?: string;
+bio?: string | null;
+photo?: string | null;
+linkedin_url?: string | null;
+twitter_url?: string | null;
+instagram_url?: string | null;
+display_order?: number;
+featured?: boolean;
+status?: "draft" | "published" | "archived";
+created_at?: string;
+updated_at?: string;
+};
+};
    programmes: {
     Row: {
      id: string;
@@ -848,6 +895,8 @@ export type ProgrammeInsert = Database["public"]["Tables"]["programmes"]["Insert
 export type ProgrammeUpdate = Database["public"]["Tables"]["programmes"]["Update"];
 export type BeneficiaryInsert = Database["public"]["Tables"]["beneficiaries"]["Insert"];
 export type BeneficiaryUpdate = Database["public"]["Tables"]["beneficiaries"]["Update"];
+export type ExecutiveInsert = Database["public"]["Tables"]["executives"]["Insert"];
+export type ExecutiveUpdate = Database["public"]["Tables"]["executives"]["Update"];
 export type TestimonialInsert = Database["public"]["Tables"]["testimonials"]["Insert"];
 export type TestimonialUpdate = Database["public"]["Tables"]["testimonials"]["Update"];
 export type EventInsert = Database["public"]["Tables"]["events"]["Insert"];
