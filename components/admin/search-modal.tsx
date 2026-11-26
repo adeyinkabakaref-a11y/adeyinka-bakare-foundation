@@ -32,14 +32,31 @@ interface SearchModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const pageItems: PaletteItem[] = adminNavigation.map((item) => ({
-  id: item.href,
-  group: "Go to",
-  title: item.label,
-  subtitle: item.group,
-  url: item.href,
-  icon: item.icon,
-}));
+const pageItems: PaletteItem[] = adminNavigation.flatMap((item) => {
+  if (item.children) {
+    return item.children
+      .filter((child) => child.href)
+      .map((child) => ({
+        id: child.href!,
+        group: item.label,
+        title: child.label,
+        subtitle: child.badge,
+        url: child.href!,
+        icon: child.icon,
+      }));
+  }
+  if (item.href) {
+    return {
+      id: item.href,
+      group: item.group || "Pages",
+      title: item.label,
+      subtitle: item.badge,
+      url: item.href,
+      icon: item.icon,
+    };
+  }
+  return [];
+});
 
 /** Command palette: jump to any dashboard page. Resource search plugs into `results` later. */
 export function SearchModal({ open, onOpenChange }: SearchModalProps) {

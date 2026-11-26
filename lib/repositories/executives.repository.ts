@@ -29,7 +29,7 @@ export async function findPublishedExecutives() {
 
   if (error) throw error;
 
-  return data;
+  return data || [];
 }
 
 /** Cheap check used to decide whether the site links to the Executives page at all. */
@@ -54,40 +54,89 @@ export async function findExecutiveById(id: string) {
     .from("executives")
     .select("*")
     .eq("id", id)
-    .single();
+    .maybeSingle();
 
   if (error) throw error;
 
   return data;
 }
 
-export async function createExecutive(data: ExecutiveInsert) {
+export async function findExecutivesBySession(session: string) {
   const supabase = await createClient();
 
-  const { data: executive, error } = await supabase
+  const { data, error } = await supabase
     .from("executives")
-    .insert(data)
-    .select()
-    .single();
+    .select("*")
+    .eq("session", session)
+    .order("display_order", { ascending: true });
 
   if (error) throw error;
 
-  return executive;
+  return data;
 }
 
-export async function updateExecutive(id: string, data: ExecutiveUpdate) {
+export async function findCurrentExecutives() {
   const supabase = await createClient();
 
-  const { data: executive, error } = await supabase
+  const { data, error } = await supabase
     .from("executives")
-    .update(data)
-    .eq("id", id)
-    .select()
-    .single();
+    .select("*")
+    .eq("is_current", true)
+    .order("display_order", { ascending: true });
 
   if (error) throw error;
 
-  return executive;
+  return data;
+}
+
+export async function setCurrentExecutives(session: string) {
+  const supabase = await createClient();
+
+  // Set all executives to non-current
+  const { error: updateError1 } = await supabase
+    .from("executives")
+    .update({ is_current: false })
+    .neq("is_current", false);
+
+  if (updateError1) throw updateError1;
+
+  // Set executives for the given session as current
+  const { error: updateError2 } = await supabase
+    .from("executives")
+    .update({ is_current: true })
+    .eq("session", session);
+
+  if (updateError2) throw updateError2;
+
+  return await findCurrentExecutives();
+}
+
+export async function createExecutive(executiveData: ExecutiveInsert) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("executives")
+    .insert(executiveData)
+    .select("*");
+
+  if (error) throw error;
+
+  return data?.[0] || null;
+}
+
+export async function updateExecutive(id: string, executiveData: ExecutiveUpdate) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("executives")
+    .update(executiveData)
+    .eq("id", id)
+    .select("*")
+    .maybeSingle();
+
+  if (error) throw error;
+
+  return data;
 }
 
 export async function deleteExecutive(id: string) {
