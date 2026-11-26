@@ -3,9 +3,12 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Award } from "lucide-react";
+import { Award, Users, CheckCircle } from "lucide-react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { ResourceList } from "@/components/admin/resource-list";
 import { StatusBadge, FeaturedBadge } from "@/components/admin/status-badge";
 import { Toolbar } from "@/components/admin/toolbar";
@@ -14,6 +17,16 @@ import { EmptyState } from "@/components/admin/empty-state";
 import { ConfirmDialog } from "@/components/admin/confirm-dialog";
 import { PageHeader } from "@/components/admin/page-header";
 import { useToast } from "@/hooks/use-toast";
+import { serverGetAllExecutives, serverDeleteExecutive, serverSetCurrentExecutives } from "@/lib/services/executives.actions";
+
+const SESSIONS = [
+  "2024/2025",
+  "2025/2026",
+  "2026/2027",
+  "2027/2028",
+  "2028/2029",
+  "2029/2030",
+];
 
 interface Executive {
   id: string;
@@ -23,6 +36,10 @@ interface Executive {
   display_order: number;
   featured: boolean;
   status: "draft" | "published" | "archived";
+  session: string | null;
+  is_current: boolean;
+  started_at: string | null;
+  ended_at: string | null;
 }
 
 function Avatar({ executive }: { executive: Executive }) {
@@ -49,43 +66,46 @@ export default function AdminExecutivesPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
+  const [settingCurrent, setSettingCurrent] = useState(false);
   const [executives, setExecutives] = useState<Executive[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [selectedSession, setSelectedSession] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadExecutives = async () => {
-      try {
-        const response = await fetch("/api/admin/executives");
-        const result = await response.json();
-
-        if (!result.success) throw new Error(result.error || "Failed to load executives");
-        setExecutives(result.data);
-      } catch (error) {
-        console.error("Error loading executives:", error);
-        toast({ variant: "destructive", title: "Error", description: "Failed to load executives" });
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadExecutives();
-  }, [toast]);
+  }, []);
+
+  const loadExecutives = async () => {
+    try {
+      setLoading(true);
+      const data = await serverGetAllExecutives();
+      setExecutives(data);
+      // Find the current session and set it as selected
+      const currentSession = data.find((exec) => exec.is_current)?.session;
+      if (currentSession) {
+        setSelectedSession(currentSession);
+      }
+    } catch (error) {
+      console.error("Error loading executives:", error);
+      toast({ variant: "destructive", title: "Error", description: "Failed to load executives" });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const query = searchQuery.toLowerCase();
   const filtered = executives.filter(
     (executive) =>
       executive.full_name.toLowerCase().includes(query) ||
-      executive.position.toLowerCase().includes(query)
+      executive.position.toLowerCase().includes(query) ||
+      (executive.session && executive.session.toLowerCase().includes(query))
   );
 
   const handleDelete = async (id: string) => {
     setDeleting(true);
     try {
-      const response = await fetch(`/api/admin/executives/${id}`, { method: "DELETE" });
-      const result = await response.json();
-      if (!result.success) throw new Error(result.error);
-
+      await serverDeleteExecutive(id, "current-user");
       setExecutives((current) => current.filter((executive) => executive.id !== id));
       setDeleteConfirm(null);
       toast({ title: "Success", description: "Executive deleted successfully" });
@@ -94,6 +114,22 @@ export default function AdminExecutivesPage() {
       toast({ variant: "destructive", title: "Error", description: "Failed to delete executive" });
     } finally {
       setDeleting(false);
+    }
+  };
+
+  const handleSetCurrent = async () => {
+    if (!selectedSession) return;
+    setSettingCurrent(true);
+    try {
+      await serverSetCurrentExecutives(selectedSession, "current-user");
+      await loadExecutives();
+      setSelectedSession(null);
+      toast({ title: "Success", description: `Executive team for ${selectedSession} set as current` });
+    } catch (error) {
+      console.error("Error setting current executives:", error);
+      toast({ variant: "destructive", title: "Error", description: "Failed to set current executives" });
+    } finally {
+      setSettingCurrent(false);
     }
   };
 
@@ -119,7 +155,35 @@ export default function AdminExecutivesPage() {
             />
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
+          {/* Session Management */}
+          <div className="flex items-center gap-4 p-4 bg-muted rounded-lg">
+            <Users className="h-5 w-5 text-muted-foreground" />
+            <div className="flex-1">
+              <label className="text-sm font-medium">Set Current Executive Team</label>
+              <p className="text-xs text-muted-foreground">Select a session to set its executives as the current team</p>
+            </div>
+            <div className="flex gap-2">
+              <select
+                value={selectedSession || ""}
+                onChange={(e) => setSelectedSession(e.target.value || null)}
+                className="px-3 py-2 border rounded-md bg-background"
+              >
+                <option value="">Select session...</option>
+                {SESSIONS.map((session) => (
+                  <option key={session} value={session}>{session}</option>
+                ))}
+              </select>
+              <Button
+                onClick={handleSetCurrent}
+                disabled={!selectedSession || settingCurrent}
+                loading={settingCurrent}
+              >
+                Set Current
+              </Button>
+            </div>
+          </div>
+
           {loading ? (
             <ListSkeleton rows={4} />
           ) : filtered.length === 0 ? (
@@ -148,18 +212,21 @@ export default function AdminExecutivesPage() {
                       <Avatar executive={r} />
                       <span className="flex items-center gap-2">
                         {r.full_name}
+                        {r.is_current && <Badge className="bg-green-100 text-green-800"><CheckCircle className="h-3 w-3 mr-1" />Current</Badge>}
                         {r.featured && <FeaturedBadge />}
                       </span>
                     </div>
                   ),
                 },
                 { header: "Position", cell: (r) => r.position, className: "text-muted-foreground" },
+                { header: "Session", cell: (r) => r.session || "-", className: "text-muted-foreground" },
                 { header: "Order", cell: (r) => r.display_order, className: "text-muted-foreground" },
                 { header: "Status", cell: (r) => <StatusBadge status={r.status} /> },
               ]}
               title={(r) => r.full_name}
               badges={(r) => (
                 <>
+                  {r.is_current && <Badge className="bg-green-100 text-green-800"><CheckCircle className="h-3 w-3 mr-1" />Current</Badge>}
                   {r.featured && <FeaturedBadge />}
                   <StatusBadge status={r.status} />
                 </>
@@ -167,6 +234,7 @@ export default function AdminExecutivesPage() {
               meta={(r) => (
                 <>
                   <p>{r.position}</p>
+                  <p>Session: {r.session || "Not set"}</p>
                   <p>Order {r.display_order}</p>
                 </>
               )}
@@ -186,6 +254,7 @@ export default function AdminExecutivesPage() {
         confirmLabel="Delete"
         destructive
         cancelLabel="Cancel"
+        loading={deleting}
       />
     </div>
   );

@@ -1,13 +1,18 @@
-import { NextResponse } from "next/server";
-import { getPublishedExecutives } from "@/lib/services/executives.service";
+import { NextRequest, NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
-// Public read: published executives only, in display order.
-export async function GET() {
-  try {
-    const executives = await getPublishedExecutives();
-    return NextResponse.json({ success: true, data: executives });
-  } catch (error) {
-    console.error("Get public executives error:", error);
-    return NextResponse.json({ success: false, error: "Failed to fetch executives" }, { status: 500 });
+export async function GET(request: NextRequest) {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("executives")
+    .select("*")
+    .eq("status", "published")
+    .order("display_order", { ascending: true });
+
+  if (error) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
+
+  return NextResponse.json({ success: true, data });
 }

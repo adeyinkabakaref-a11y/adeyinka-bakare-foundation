@@ -7,7 +7,7 @@ import { Reveal } from "@/components/public/reveal";
 import { Section } from "@/components/public/section";
 import { CTABanner } from "@/components/public/cta-banner";
 import { IconTile } from "@/components/public/feature-card";
-import { ExecutiveGrid } from "@/components/public/executive-card";
+import { ExpandableExecutiveGrid } from "@/components/public/executive-card";
 import { getPublishedExecutives } from "@/lib/services/executives.service";
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default async function ExecutivesPage() {
       <PageHero
         eyebrow="Leadership"
         title="Our Executives"
-        description="The executive members who lead the Adeyinka Bakare Fellowship."
+        description="The executive members who lead the Adeyinka Bakare Fellowship across different sessions."
       />
 
       <Section>
@@ -51,7 +51,7 @@ export default async function ExecutivesPage() {
             </div>
           </Reveal>
         ) : (
-          <ExecutiveGrid executives={executives} />
+          <ExpandableExecutiveGrid executives={executives} />
         )}
       </Section>
 

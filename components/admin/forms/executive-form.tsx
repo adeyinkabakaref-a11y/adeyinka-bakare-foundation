@@ -27,6 +27,10 @@ export type ExecutiveFormValues = {
   display_order: string;
   featured: boolean;
   status: "draft" | "published" | "archived";
+  session: string;
+  is_current: boolean;
+  started_at: string;
+  ended_at: string;
 };
 
 const EMPTY: ExecutiveFormValues = {
@@ -40,7 +44,30 @@ const EMPTY: ExecutiveFormValues = {
   display_order: "0",
   featured: false,
   status: "draft",
+  session: "",
+  is_current: false,
+  started_at: "",
+  ended_at: "",
 };
+
+const SESSIONS = [
+  "2024/2025",
+  "2025/2026",
+  "2026/2027",
+  "2027/2028",
+  "2028/2029",
+  "2029/2030",
+  "2030/2031",
+  "2031/2032",
+  "2032/2033",
+  "2033/2034",
+  "2034/2035",
+  "2035/2036",
+  "2036/2037",
+  "2037/2038",
+  "2038/2039",
+  "2039/2040",
+];
 
 const BIO_LIMIT = 1200;
 
@@ -90,6 +117,10 @@ export function ExecutiveForm({
         display_order: Number(formData.display_order),
         featured: formData.featured,
         status: formData.status,
+        session: formData.session.trim() || null,
+        is_current: formData.is_current,
+        started_at: formData.started_at || null,
+        ended_at: formData.ended_at || null,
       };
 
       const url = mode === "edit" ? `/api/admin/executives/${params.id}` : "/api/admin/executives";
@@ -166,6 +197,19 @@ export function ExecutiveForm({
               </div>
 
               <div className="space-y-1.5">
+                <Label htmlFor="session">Session</Label>
+                <Select value={formData.session} onValueChange={(value) => setField("session", value)} disabled={loading}>
+                  <SelectTrigger id="session" className="border-border"><SelectValue placeholder="Select session" /></SelectTrigger>
+                  <SelectContent>
+                    {SESSIONS.map((session) => (
+                      <SelectItem key={session} value={session}>{session}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">The academic session this executive belongs to</p>
+              </div>
+
+              <div className="space-y-1.5">
                 <Label htmlFor="display_order">Display Order</Label>
                 <Input
                   id="display_order"
@@ -191,6 +235,40 @@ export function ExecutiveForm({
                     <SelectItem value="archived">Archived (hidden)</SelectItem>
                   </SelectContent>
                 </Select>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="started_at">Start Date</Label>
+                <Input
+                  id="started_at"
+                  type="date"
+                  value={formData.started_at}
+                  onChange={(e) => setField("started_at", e.target.value)}
+                  className="border-border"
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="space-y-1.5">
+                <Label htmlFor="ended_at">End Date</Label>
+                <Input
+                  id="ended_at"
+                  type="date"
+                  value={formData.ended_at}
+                  onChange={(e) => setField("ended_at", e.target.value)}
+                  className="border-border"
+                  disabled={loading}
+                />
+              </div>
+
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-4">
+                <Switch id="is_current" checked={formData.is_current} onCheckedChange={(checked) => setField("is_current", checked)} disabled={loading} />
+                <div>
+                  <Label htmlFor="is_current" className="cursor-pointer text-foreground">Current Executive</Label>
+                  <p className="text-xs text-muted-foreground">Mark as part of the current executive team</p>
+                </div>
               </div>
             </div>
 

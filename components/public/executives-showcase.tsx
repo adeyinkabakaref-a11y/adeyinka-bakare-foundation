@@ -2,7 +2,7 @@ import Link from "next/link";
 import { unstable_rethrow } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
-import { ExecutiveGrid, type PublicExecutive } from "@/components/public/executive-card";
+import { ExpandableExecutiveGrid, type PublicExecutive } from "@/components/public/executive-card";
 import { Reveal } from "@/components/public/reveal";
 import { Section, SectionHeading } from "@/components/public/section";
 import { getFeaturedExecutives } from "@/lib/services/executives.service";
@@ -38,11 +38,11 @@ export function ExecutivesShowcase({ executives, id, tone = "default" }: Executi
         <SectionHeading
           eyebrow="Leadership"
           title="Meet the executives"
-          description="The executive members who lead the Fellowship."
+          description="The executive members who lead the Fellowship. Click a card to see more details."
         />
       </Reveal>
 
-      <ExecutiveGrid executives={executives} compact />
+      <ExpandableExecutiveGrid executives={executives} />
 
       <Reveal delay={0.2}>
         <div className="mt-10 flex justify-center">

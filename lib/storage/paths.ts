@@ -11,6 +11,9 @@ export const STORAGE_BUCKETS = {
   "public-media": "public-media",
   "private-documents": "private-documents",
   "admin-uploads": "admin-uploads",
+  "meeting-minutes": "meeting-minutes",
+  "handover-documents": "handover-documents",
+  "proposal-attachments": "proposal-attachments",
 } as const;
 
 export const RESOURCE_BUCKET_MAP: Record<string, string> = {
@@ -26,6 +29,9 @@ export const RESOURCE_BUCKET_MAP: Record<string, string> = {
   "social-links": "social-icons",
   settings: "logo-assets",
   footer: "public-images",
+  meetings: "meeting-minutes",
+  handovers: "handover-documents",
+  proposals: "proposal-attachments",
 };
 
 export function getBucketForResource(resource: string): string {

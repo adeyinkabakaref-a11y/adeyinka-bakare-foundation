@@ -13,6 +13,10 @@ export const executiveSchema = z.object({
   display_order: z.number().int().min(0).max(9999).optional(),
   featured: z.boolean().optional(),
   status: z.enum(["draft", "published", "archived"]).optional(),
+  session: z.string().optional().nullable(),
+  is_current: z.boolean().optional(),
+  started_at: z.string().optional().nullable(),
+  ended_at: z.string().optional().nullable(),
 });
 
 export type ExecutiveInput = z.infer<typeof executiveSchema>;
